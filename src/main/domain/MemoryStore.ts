@@ -21,8 +21,7 @@ export default class MemoryStore<K extends ValueObject, V extends Entity<K>> {
     store: Entry<K, V>[] = []
 
     insert(val: V): void {
-        const currentVal = this.findBy(val.key())
-        if (currentVal != null) {
+        if (this.has(val.key())) {
             // すでに存在するキーに対して挿入しようとした場合
             throw Error(`key of ${val.key()} is already exists`)
         }
@@ -37,9 +36,13 @@ export default class MemoryStore<K extends ValueObject, V extends Entity<K>> {
         return entry.val
     }
 
+    has(key: K): boolean {
+        const find = this.store.find(it => it.key.eq(key))
+        return find != null
+    }
+
     update(newVal: V) {
-        const currentVal = this.findBy(newVal.key())
-        if (currentVal == null) {
+        if (!this.has(newVal.key())) {
             // 旧値が存在しない場合
             throw Error(`key of ${newVal.key()} is no value present`)
         }
@@ -48,7 +51,12 @@ export default class MemoryStore<K extends ValueObject, V extends Entity<K>> {
     }
 
     deleteBy(key: K) {
-        this.store.filter(it => it.key.not(key))
+        this.store = this.store.filter(it => it.key.not(key))
     }
+
+    size(): number {
+        return this.store.length
+    }
+
 
 }
