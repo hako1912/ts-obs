@@ -1,8 +1,8 @@
 {
   "name": "@hako1912/ts-utils",
   "version": "0.0.1",
-  "main": "./dist/index.js",
-  "types": "./dist/index.d.ts",
+  "main": "./dist/bundle.js",
+  "types": "./lib/index.d.ts",
   "repository": "git@github.com:hako1912/ts-utils.git",
   "author": "koya",
   "license": "MIT",
@@ -16,7 +16,7 @@
   },
   "scripts": {
     "mocha": "mocha --watch --watch-extensions ts --recursive --require ts-node/register -r tsconfig-paths/register \"src/test/**/*.test.ts\"",
-    "build": "webpack"
+    "build": "TS_NODE_PROJECT=\"tsconfig.json\" webpack"
   },
   "devDependencies": {
     "@types/mocha": "^5.2.4",

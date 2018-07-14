@@ -1,3 +1,5 @@
+var path = require('path');
+
 module.exports = {
     // モード値を production に設定すると最適化された状態で、
     // development に設定するとソースマップ有効でJSファイルが出力される
@@ -5,7 +7,8 @@ module.exports = {
 
     // メインとなるJavaScriptファイル（エントリーポイント）
     entry: './src/main/index.ts',
-
+    output:
+        {path: __dirname, filename: "dist/index.js"},
     module: {
         rules: [
             {
@@ -18,6 +21,9 @@ module.exports = {
     },
     // import 文で .ts ファイルを解決するため
     resolve: {
+        alias: {
+            '@': path.resolve(__dirname, './src/main/')
+        },
         extensions: [
             '.ts'
         ]
