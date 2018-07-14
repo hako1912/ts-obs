@@ -98,6 +98,18 @@ eval("\r\nvar __importDefault = (this && this.__importDefault) || function (mod)
 
 /***/ }),
 
+/***/ "./src/main/domain/EntityKey.ts":
+/*!**************************************!*\
+  !*** ./src/main/domain/EntityKey.ts ***!
+  \**************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+eval("\r\nvar __importDefault = (this && this.__importDefault) || function (mod) {\r\n    return (mod && mod.__esModule) ? mod : { \"default\": mod };\r\n};\r\nObject.defineProperty(exports, \"__esModule\", { value: true });\r\nconst ValueObject_1 = __importDefault(__webpack_require__(/*! ./ValueObject */ \"./src/main/domain/ValueObject.ts\"));\r\nclass EntityKey extends ValueObject_1.default {\r\n}\r\nexports.default = EntityKey;\r\n\n\n//# sourceURL=webpack:///./src/main/domain/EntityKey.ts?");
+
+/***/ }),
+
 /***/ "./src/main/domain/MemoryStore.ts":
 /*!****************************************!*\
   !*** ./src/main/domain/MemoryStore.ts ***!
@@ -122,6 +134,42 @@ eval("\r\nvar __importDefault = (this && this.__importDefault) || function (mod)
 
 /***/ }),
 
+/***/ "./src/main/domain/SurrogateKey.ts":
+/*!*****************************************!*\
+  !*** ./src/main/domain/SurrogateKey.ts ***!
+  \*****************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+eval("\r\nvar __importDefault = (this && this.__importDefault) || function (mod) {\r\n    return (mod && mod.__esModule) ? mod : { \"default\": mod };\r\n};\r\nObject.defineProperty(exports, \"__esModule\", { value: true });\r\nconst EntityKey_1 = __importDefault(__webpack_require__(/*! ./EntityKey */ \"./src/main/domain/EntityKey.ts\"));\r\nclass SurrogateKey extends EntityKey_1.default {\r\n    constructor(id) {\r\n        super();\r\n        this.id = id;\r\n    }\r\n    eq(val) {\r\n        return this.id === val.id;\r\n    }\r\n}\r\nexports.default = SurrogateKey;\r\n\n\n//# sourceURL=webpack:///./src/main/domain/SurrogateKey.ts?");
+
+/***/ }),
+
+/***/ "./src/main/domain/SurrogateKeyEntity.ts":
+/*!***********************************************!*\
+  !*** ./src/main/domain/SurrogateKeyEntity.ts ***!
+  \***********************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+eval("\r\nvar __importDefault = (this && this.__importDefault) || function (mod) {\r\n    return (mod && mod.__esModule) ? mod : { \"default\": mod };\r\n};\r\nObject.defineProperty(exports, \"__esModule\", { value: true });\r\nconst Entity_1 = __importDefault(__webpack_require__(/*! ./Entity */ \"./src/main/domain/Entity.ts\"));\r\nclass SurrogateKeyEntity extends Entity_1.default {\r\n    key() {\r\n        if (!this.id) {\r\n            throw new Error('unassigned key');\r\n        }\r\n        return this.id;\r\n    }\r\n    hasKey() {\r\n        return this.id != null;\r\n    }\r\n    assigneKey(key) {\r\n        if (this.id) {\r\n            throw new Error('already unassigned');\r\n        }\r\n        this.id = key;\r\n    }\r\n}\r\nexports.default = SurrogateKeyEntity;\r\n\n\n//# sourceURL=webpack:///./src/main/domain/SurrogateKeyEntity.ts?");
+
+/***/ }),
+
+/***/ "./src/main/domain/SurrogateKeyRepository.ts":
+/*!***************************************************!*\
+  !*** ./src/main/domain/SurrogateKeyRepository.ts ***!
+  \***************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+eval("\r\nvar __importDefault = (this && this.__importDefault) || function (mod) {\r\n    return (mod && mod.__esModule) ? mod : { \"default\": mod };\r\n};\r\nObject.defineProperty(exports, \"__esModule\", { value: true });\r\nconst Repository_1 = __importDefault(__webpack_require__(/*! ./Repository */ \"./src/main/domain/Repository.ts\"));\r\nconst SurrogateKey_1 = __importDefault(__webpack_require__(/*! ./SurrogateKey */ \"./src/main/domain/SurrogateKey.ts\"));\r\nclass SurrogateKeyRepository extends Repository_1.default {\r\n    constructor() {\r\n        super();\r\n        this.incremental = 0;\r\n    }\r\n    preInsert(entity) {\r\n        // 連番キーを割り当てる\r\n        if (!entity.hasKey()) {\r\n            entity.assigneKey(new SurrogateKey_1.default(this.incremental++));\r\n        }\r\n    }\r\n    preUpdate(newValue, key) {\r\n        newValue.assigneKey(key);\r\n    }\r\n}\r\nexports.default = SurrogateKeyRepository;\r\n\n\n//# sourceURL=webpack:///./src/main/domain/SurrogateKeyRepository.ts?");
+
+/***/ }),
+
 /***/ "./src/main/domain/ValueObject.ts":
 /*!****************************************!*\
   !*** ./src/main/domain/ValueObject.ts ***!
@@ -142,7 +190,7 @@ eval("\r\nObject.defineProperty(exports, \"__esModule\", { value: true });\r\ncl
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-eval("\r\nfunction __export(m) {\r\n    for (var p in m) if (!exports.hasOwnProperty(p)) exports[p] = m[p];\r\n}\r\nObject.defineProperty(exports, \"__esModule\", { value: true });\r\n__export(__webpack_require__(/*! ./domain/Repository */ \"./src/main/domain/Repository.ts\"));\r\n__export(__webpack_require__(/*! ./domain/Entity */ \"./src/main/domain/Entity.ts\"));\r\n__export(__webpack_require__(/*! ./domain/ValueObject */ \"./src/main/domain/ValueObject.ts\"));\r\n__export(__webpack_require__(/*! ./domain/MemoryStore */ \"./src/main/domain/MemoryStore.ts\"));\r\n\n\n//# sourceURL=webpack:///./src/main/index.ts?");
+eval("\r\nfunction __export(m) {\r\n    for (var p in m) if (!exports.hasOwnProperty(p)) exports[p] = m[p];\r\n}\r\nObject.defineProperty(exports, \"__esModule\", { value: true });\r\n__export(__webpack_require__(/*! ./domain/Repository */ \"./src/main/domain/Repository.ts\"));\r\n__export(__webpack_require__(/*! ./domain/Entity */ \"./src/main/domain/Entity.ts\"));\r\n__export(__webpack_require__(/*! ./domain/ValueObject */ \"./src/main/domain/ValueObject.ts\"));\r\n__export(__webpack_require__(/*! ./domain/MemoryStore */ \"./src/main/domain/MemoryStore.ts\"));\r\n__export(__webpack_require__(/*! ./domain/SurrogateKey */ \"./src/main/domain/SurrogateKey.ts\"));\r\n__export(__webpack_require__(/*! ./domain/SurrogateKeyRepository */ \"./src/main/domain/SurrogateKeyRepository.ts\"));\r\n__export(__webpack_require__(/*! ./domain/SurrogateKeyEntity */ \"./src/main/domain/SurrogateKeyEntity.ts\"));\r\n\n\n//# sourceURL=webpack:///./src/main/index.ts?");
 
 /***/ })
 
