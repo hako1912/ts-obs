@@ -1,6 +1,8 @@
 import ObsList from "../ObsList";
 import ObsValue from "@/beans/ObsValue";
 
+// TODO: フィルタ条件は最初に渡したもので固定
+// TODO: 条件を動的に変えたいならObsPredをつくる
 export default class ListFilterBinding<T> {
     public constructor(
         private obs: ObsList<T>,

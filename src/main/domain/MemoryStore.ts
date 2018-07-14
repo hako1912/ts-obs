@@ -17,6 +17,7 @@ export class Entry<K, V> {
 // TODO: createFilterとか
 export default class MemoryStore<K extends ValueObject<K>, V extends Entity<K>> {
 
+    // TODO: to ObsList?
     store: Entry<K, V>[] = []
 
     insert(val: V): void {
