@@ -1,5 +1,5 @@
 import * as assert from "power-assert";
-import ObsValue from "@/beans/ObsValue";
+import ObsValue from "../../main/beans/ObsValue";
 
 describe("ObsValue", () => {
     it("addListener", () => {

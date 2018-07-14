@@ -6,12 +6,25 @@ export default abstract class Repository<K extends EntityKey, E extends Entity<K
 
     protected store: MemoryStore<K, E> = new MemoryStore()
 
+    preInsert(entity: E) {
+        // noop
+    }
+
     insert(entity: E): void {
+        // サブクラスで登録前に処理を挟む場合ここで
+        this.preInsert(entity)
+
         this.store.insert(entity)
     }
 
-    update(newValue: E): void {
-        this.store.update(newValue)
+    preUpdate(newVal: E, key: K){
+        // noop
+    }
+
+    update(newValue: E, key: K): void {
+        // サブクラスで登録前に処理を挟む場合ここで
+        this.preUpdate(newValue, key)
+        this.store.update(newValue, key)
     }
 
     remove(key: K): void {

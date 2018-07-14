@@ -1,5 +1,5 @@
-import ObsList from "@/beans/ObsList";
 import * as assert from "power-assert";
+import ObsList from "../../main/beans/ObsList";
 
 describe("ObsList", () => {
     it("配列変更", () => {
