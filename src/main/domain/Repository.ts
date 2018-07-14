@@ -6,7 +6,14 @@ export default abstract class Repository<K extends EntityKey, E extends Entity<K
 
     protected store: MemoryStore<K, E> = new MemoryStore()
 
+    preInsert(entity: E) {
+        // noop
+    }
+
     insert(entity: E): void {
+        // サブクラスで登録前に処理を挟む場合ここで
+        this.preInsert(entity)
+
         this.store.insert(entity)
     }
 
