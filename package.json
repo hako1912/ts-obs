@@ -1,0 +1,25 @@
+{
+  "name": "@hako1912/ts-utils",
+  "version": "1.0.0",
+  "main": "index.js",
+  "repository": "git@github.com:hako1912/ts-utils.git",
+  "author": "koya",
+  "license": "MIT",
+  "private": false,
+  "dependencies": {
+    "typescript": "^2.9.2"
+  },
+  "scripts": {
+    "mocha": "mocha --watch --recursive --require ts-node/register -r tsconfig-paths/register \"src/test/**/*.test.ts\""
+  },
+  "devDependencies": {
+    "@types/mocha": "^5.2.4",
+    "@types/power-assert": "^1.5.0",
+    "espower-typescript": "^9.0.0",
+    "mocha": "^5.2.0",
+    "power-assert": "^1.6.0",
+    "ts-node": "^7.0.0",
+    "tsconfig-paths": "^3.4.2",
+    "webpack": "^4.14.0"
+  }
+}
