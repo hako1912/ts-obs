@@ -1,5 +1,5 @@
 import ObsList from "../ObsList";
-import ObsValue from "@/beans/ObsValue";
+import ObsValue from "../ObsValue";
 
 // TODO: フィルタ条件は最初に渡したもので固定
 // TODO: 条件を動的に変えたいならObsPredをつくる

@@ -1,4 +1,4 @@
-import ObsValue from "@/beans/ObsValue";
+import ObsValue from "../ObsValue";
 
 export default class ValueBinding<T, U = T> {
   constructor(

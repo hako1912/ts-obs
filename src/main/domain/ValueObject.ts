@@ -1,9 +1,8 @@
+export default abstract class ValueObject {
+    abstract eq(val: this): boolean
 
-
-export default abstract class ValueObject<T> {
-    abstract eq(val: T): boolean
-
-    not(val: T): boolean {
+    not(val: this): boolean {
         return !this.eq(val)
     }
 }
+
