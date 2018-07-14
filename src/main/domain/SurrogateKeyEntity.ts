@@ -12,6 +12,10 @@ export default class SurrogateKeyEntity extends Entity<SurrogateKey> {
         return this.id;
     }
 
+    public hasKey(): boolean {
+        return this.id != null
+    }
+
     public assigneKey(key: SurrogateKey) {
         if (this.id) {
             throw new Error('already unassigned')

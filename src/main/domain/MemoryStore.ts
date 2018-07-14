@@ -41,12 +41,12 @@ export default class MemoryStore<K extends ValueObject, V extends Entity<K>> {
         return find != null
     }
 
-    update(newVal: V) {
-        if (!this.has(newVal.key())) {
+    update(newVal: V, key: K) {
+        if (!this.has(key)) {
             // 旧値が存在しない場合
-            throw Error(`key of ${newVal.key()} is no value present`)
+            throw Error(`key of ${key} is no value present`)
         }
-        this.deleteBy(newVal.key())
+        this.deleteBy(key)
         this.insert(newVal)
     }
 

@@ -13,7 +13,14 @@ export default abstract class SurrogateKeyRepository<E extends SurrogateKeyEntit
 
     preInsert(entity: E) {
         // 連番キーを割り当てる
-        entity.assigneKey(new SurrogateKey(this.incremental++))
+        if (!entity.hasKey()) {
+            entity.assigneKey(new SurrogateKey(this.incremental++))
+        }
     }
+
+    preUpdate(newValue: E, key: SurrogateKey) {
+        newValue.assigneKey(key)
+    }
+
 
 }

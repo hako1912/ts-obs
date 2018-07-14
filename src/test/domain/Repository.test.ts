@@ -1,8 +1,7 @@
-import {Functions} from "@/funciton/funciton";
-import Entity from "@/domain/Entity";
-import EntityKey from "@/domain/EntityKey";
-import Repository from "@/domain/Repository";
 import assert = require("power-assert");
+import Entity from "../../main/domain/Entity";
+import Repository from "../../main/domain/Repository";
+import EntityKey from "../../main/domain/EntityKey";
 
 class TestRepository extends Repository<TestEntityKey, TestEntity> {
 
@@ -45,7 +44,7 @@ describe("Repository", () => {
 
         // 更新
         const entUpdate = new TestEntity('taro', 2)
-        rep.update(entUpdate)
+        rep.update(entUpdate, new TestEntityKey('taro'))
         // 確認
         assert.equal(rep.size(), 1)
         assert.equal(rep.findBy(new TestEntityKey('taro')), entUpdate)
