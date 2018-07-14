@@ -94,7 +94,7 @@
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-eval("\r\nvar __importDefault = (this && this.__importDefault) || function (mod) {\r\n    return (mod && mod.__esModule) ? mod : { \"default\": mod };\r\n};\r\nObject.defineProperty(exports, \"__esModule\", { value: true });\r\nconst ValueObject_1 = __importDefault(__webpack_require__(/*! ./ValueObject */ \"./src/main/domain/ValueObject.ts\"));\r\nclass Entity extends ValueObject_1.default {\r\n    eq(val) {\r\n        // キー同士が同じなら同じエンティティ\r\n        return this.key().eq(val.key());\r\n    }\r\n}\r\nexports.default = Entity;\r\n\n\n//# sourceURL=webpack:///./src/main/domain/Entity.ts?");
+eval("\r\nvar __importDefault = (this && this.__importDefault) || function (mod) {\r\n    return (mod && mod.__esModule) ? mod : { \"default\": mod };\r\n};\r\nObject.defineProperty(exports, \"__esModule\", { value: true });\r\nconst ValueObject_1 = __importDefault(__webpack_require__(/*! ./ValueObject */ \"./src/main/domain/ValueObject.ts\"));\r\nclass Entity extends ValueObject_1.default {\r\n    eq(vals) {\r\n        // キー同士が同じなら同じエンティティ\r\n        return this.key().eq(vals.key());\r\n    }\r\n}\r\nexports.default = Entity;\r\n\n\n//# sourceURL=webpack:///./src/main/domain/Entity.ts?");
 
 /***/ }),
 
@@ -118,7 +118,7 @@ eval("\r\nvar __importDefault = (this && this.__importDefault) || function (mod)
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-eval("\r\nObject.defineProperty(exports, \"__esModule\", { value: true });\r\nclass Entry {\r\n    constructor(_key, _val) {\r\n        this._key = _key;\r\n        this._val = _val;\r\n    }\r\n    get key() {\r\n        return this._key;\r\n    }\r\n    get val() {\r\n        return this._val;\r\n    }\r\n}\r\nexports.Entry = Entry;\r\n// TODO: createFilterとか\r\nclass MemoryStore {\r\n    constructor() {\r\n        // TODO: to ObsList?\r\n        this.store = [];\r\n    }\r\n    insert(val) {\r\n        if (this.has(val.key())) {\r\n            // すでに存在するキーに対して挿入しようとした場合\r\n            throw Error(`key of ${val.key()} is already exists`);\r\n        }\r\n        this.store.push(new Entry(val.key(), val));\r\n    }\r\n    findBy(key) {\r\n        const entry = this.store.find(it => it.key.eq(key));\r\n        if (entry == null) {\r\n            throw Error('no value present');\r\n        }\r\n        return entry.val;\r\n    }\r\n    has(key) {\r\n        const find = this.store.find(it => it.key.eq(key));\r\n        return find != null;\r\n    }\r\n    update(newVal, key) {\r\n        if (!this.has(key)) {\r\n            // 旧値が存在しない場合\r\n            throw Error(`key of ${key} is no value present`);\r\n        }\r\n        this.deleteBy(key);\r\n        this.insert(newVal);\r\n    }\r\n    deleteBy(key) {\r\n        this.store = this.store.filter(it => it.key.not(key));\r\n    }\r\n    size() {\r\n        return this.store.length;\r\n    }\r\n}\r\nexports.default = MemoryStore;\r\n\n\n//# sourceURL=webpack:///./src/main/domain/MemoryStore.ts?");
+eval("\r\nObject.defineProperty(exports, \"__esModule\", { value: true });\r\nclass Entry {\r\n    constructor(_key, _val) {\r\n        this._key = _key;\r\n        this._val = _val;\r\n    }\r\n    get key() {\r\n        return this._key;\r\n    }\r\n    get vals() {\r\n        return this._val;\r\n    }\r\n}\r\nexports.Entry = Entry;\r\n// TODO: createFilterとか\r\nclass MemoryStore {\r\n    constructor() {\r\n        // TODO: to ObservableList?\r\n        this.store = [];\r\n    }\r\n    insert(vals) {\r\n        if (this.has(vals.key())) {\r\n            // すでに存在するキーに対して挿入しようとした場合\r\n            throw Error(`key of ${vals.key()} is already exists`);\r\n        }\r\n        this.store.push(new Entry(vals.key(), vals));\r\n    }\r\n    findBy(key) {\r\n        const entry = this.store.find(it => it.key.eq(key));\r\n        if (entry == null) {\r\n            throw Error('no value present');\r\n        }\r\n        return entry.vals;\r\n    }\r\n    has(key) {\r\n        const find = this.store.find(it => it.key.eq(key));\r\n        return find != null;\r\n    }\r\n    update(newVal, key) {\r\n        if (!this.has(key)) {\r\n            // 旧値が存在しない場合\r\n            throw Error(`key of ${key} is no value present`);\r\n        }\r\n        this.deleteBy(key);\r\n        this.insert(newVal);\r\n    }\r\n    deleteBy(key) {\r\n        this.store = this.store.filter(it => it.key.not(key));\r\n    }\r\n    size() {\r\n        return this.store.length;\r\n    }\r\n}\r\nexports.default = MemoryStore;\r\n\n\n//# sourceURL=webpack:///./src/main/domain/MemoryStore.ts?");
 
 /***/ }),
 
@@ -142,7 +142,7 @@ eval("\r\nvar __importDefault = (this && this.__importDefault) || function (mod)
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-eval("\r\nvar __importDefault = (this && this.__importDefault) || function (mod) {\r\n    return (mod && mod.__esModule) ? mod : { \"default\": mod };\r\n};\r\nObject.defineProperty(exports, \"__esModule\", { value: true });\r\nconst EntityKey_1 = __importDefault(__webpack_require__(/*! ./EntityKey */ \"./src/main/domain/EntityKey.ts\"));\r\nclass SurrogateKey extends EntityKey_1.default {\r\n    constructor(id) {\r\n        super();\r\n        this.id = id;\r\n    }\r\n    eq(val) {\r\n        return this.id === val.id;\r\n    }\r\n}\r\nexports.default = SurrogateKey;\r\n\n\n//# sourceURL=webpack:///./src/main/domain/SurrogateKey.ts?");
+eval("\r\nvar __importDefault = (this && this.__importDefault) || function (mod) {\r\n    return (mod && mod.__esModule) ? mod : { \"default\": mod };\r\n};\r\nObject.defineProperty(exports, \"__esModule\", { value: true });\r\nconst EntityKey_1 = __importDefault(__webpack_require__(/*! ./EntityKey */ \"./src/main/domain/EntityKey.ts\"));\r\nclass SurrogateKey extends EntityKey_1.default {\r\n    constructor(id) {\r\n        super();\r\n        this.id = id;\r\n    }\r\n    eq(vals) {\r\n        return this.id === vals.id;\r\n    }\r\n}\r\nexports.default = SurrogateKey;\r\n\n\n//# sourceURL=webpack:///./src/main/domain/SurrogateKey.ts?");
 
 /***/ }),
 
@@ -178,7 +178,7 @@ eval("\r\nvar __importDefault = (this && this.__importDefault) || function (mod)
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-eval("\r\nObject.defineProperty(exports, \"__esModule\", { value: true });\r\nclass ValueObject {\r\n    not(val) {\r\n        return !this.eq(val);\r\n    }\r\n}\r\nexports.default = ValueObject;\r\n\n\n//# sourceURL=webpack:///./src/main/domain/ValueObject.ts?");
+eval("\r\nObject.defineProperty(exports, \"__esModule\", { value: true });\r\nclass ValueObject {\r\n    not(vals) {\r\n        return !this.eq(vals);\r\n    }\r\n}\r\nexports.default = ValueObject;\r\n\n\n//# sourceURL=webpack:///./src/main/domain/ValueObject.ts?");
 
 /***/ }),
 

@@ -1,6 +1,6 @@
 import EntityKey from "./EntityKey";
 import Entity from "./Entity";
-import ObsList from "../beans/ObsList";
+import ObservableList from "../beans/ObservableList";
 import FilteredList from "../beans/binding/FilteredList";
 import {Functions} from "../funciton/funciton";
 import {Predicate} from "../types";
@@ -9,7 +9,7 @@ import eq = Functions.eq;
 
 export default abstract class Repository<K extends EntityKey, E extends Entity<K>> {
 
-    protected store: ObsList<E> = new ObsList()
+    protected store: ObservableList<E> = new ObservableList()
 
     preInsert(entity: E) {
         // noop

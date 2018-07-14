@@ -1,4 +1,4 @@
-import ValueObject from "../domain/ValueObject";
+import ValueObject from "../beans/ValueObject";
 
 export module Functions {
     export function curry<T, U, R>(func: (a1: T, a2: U) => R) {

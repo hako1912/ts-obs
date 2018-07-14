@@ -1,6 +1,6 @@
 import {ValueChangeListener} from "../types";
 
-export default class ObsValue<T> {
+export default class ObservableValue<T> {
     protected listeners: ValueChangeListener<T>[] = []
 
     constructor(private _val: T) {

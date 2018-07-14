@@ -1,26 +1,25 @@
 import {ArrayChangeListener, Predicate, ValueChangeListener} from "../types";
-import ObsValue from "./ObsValue";
+import ObservableValue from "./ObservableValue";
 import FilteredList from "./binding/FilteredList";
-import ValueObject from "../domain/ValueObject";
 
-export default class ObsList<T> {
+export default class ObservableList<T> {
 
     onElementChangeObj: ValueChangeListener<T> = this.onElementChange.bind(this)
     protected arrayListeners: ArrayChangeListener<T>[] = []
     protected elementListeners: ValueChangeListener<T>[] = []
 
-    constructor(private _val: ObsValue<T>[] = []) {
+    constructor(private _val: ObservableValue<T>[] = []) {
         this._val.forEach(obs => {
             obs.addListener(this.onElementChangeObj)
         })
     }
 
 
-    get val(): ObsValue<T>[] {
+    get val(): ObservableValue<T>[] {
         return this._val
     }
 
-    set val(value: ObsValue<T>[]) {
+    set val(value: ObservableValue<T>[]) {
         this._val = value
     }
 
@@ -40,11 +39,11 @@ export default class ObsList<T> {
         this.elementListeners = this.elementListeners.filter(it => listener !== it)
     }
 
-    public push(...values: T[]): ObsValue<T>[] {
+    public push(...values: T[]): ObservableValue<T>[] {
         if (values.length === 0) {
             return []
         }
-        const appends = values.map(it => new ObsValue(it))
+        const appends = values.map(it => new ObservableValue(it))
         this._val.push(...appends)
         this.arrayListeners.forEach(lis => lis(values, []))
         appends.forEach(it => it.addListener(this.onElementChangeObj))
@@ -53,7 +52,7 @@ export default class ObsList<T> {
 
     public remove(...values: T[]) {
         // これ意味あるのか
-        const obsValues = values.map(it => new ObsValue(it))
+        const obsValues = values.map(it => new ObservableValue(it))
         obsValues.forEach(it => it.removeListener(this.onElementChangeObj))
 
         const removes: T[] = []

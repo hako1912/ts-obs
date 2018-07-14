@@ -1,4 +1,4 @@
-import ValueObject from "../../main/domain/ValueObject";
+import ValueObject from "../../main/beans/ValueObject";
 import {Functions} from "../../main/funciton/funciton";
 import eq = Functions.eq;
 import * as assert from "power-assert";
