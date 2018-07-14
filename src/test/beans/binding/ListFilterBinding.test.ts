@@ -1,7 +1,7 @@
 import * as assert from "power-assert";
 import ObsList from "../../../main/beans/ObsList";
 
-describe("ListFilterBinding", () => {
+describe("FilteredList", () => {
     it("配列フィルタ", () => {
         const obs = new ObsList<number>()
         obs.push(1, 2, 3)

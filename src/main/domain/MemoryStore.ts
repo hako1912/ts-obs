@@ -1,62 +1,63 @@
 import ValueObject from "./ValueObject";
 import Entity from "./Entity";
-
-export class Entry<K, V> {
-    constructor(private _key: K, private _val: V) {
-    }
-
-    get key(): K {
-        return this._key;
-    }
-
-    get val(): V {
-        return this._val;
-    }
-}
+import ObsList from "../beans/ObsList";
+import FilteredList from "../beans/binding/FilteredList";
 
 // TODO: createFilterとか
 export default class MemoryStore<K extends ValueObject, V extends Entity<K>> {
 
-    // TODO: to ObsList?
-    store: Entry<K, V>[] = []
+    store: ObsList<V> = new ObsList()
 
     insert(val: V): void {
+        console.log(`insert: val=${JSON.stringify(val)}`)
         if (this.has(val.key())) {
             // すでに存在するキーに対して挿入しようとした場合
             throw Error(`key of ${val.key()} is already exists`)
         }
-        this.store.push(new Entry(val.key(), val))
+        // key validation
+        if(val.key() == null){
+            throw Error('undefined key')
+        }
+        this.store.push(val)
     }
 
     findBy(key: K): V {
-        const entry = this.store.find(it => it.key.eq(key))
-        if (entry == null) {
+        console.log(`findBy: key=${JSON.stringify(key)}`)
+        const val = this.store.find(it => it.key().eq(key))
+        if (val == null) {
             throw Error('no value present')
         }
-        return entry.val
+        return val
     }
 
     has(key: K): boolean {
-        const find = this.store.find(it => it.key.eq(key))
+        const find = this.store.find(it => it.key().eq(key))
         return find != null
     }
 
     update(newVal: V, key: K) {
+        console.log(`update: key=${JSON.stringify(key)}, newVal=${JSON.stringify(newVal)}`)
         if (!this.has(key)) {
             // 旧値が存在しない場合
             throw Error(`key of ${key} is no value present`)
         }
-        this.deleteBy(key)
+        if(this.deleteBy(key) === 0){
+            throw Error('cant delete before update')
+        }
         this.insert(newVal)
     }
 
-    deleteBy(key: K) {
-        this.store = this.store.filter(it => it.key.not(key))
+    deleteBy(key: K): number {
+        console.log(`deleteBy: key=${JSON.stringify(key)}`)
+        return this.store.removeIf(it => it.key().eq(key))
     }
 
     size(): number {
-        return this.store.length
+        return this.store.val.length
     }
 
+    bindFilter(pred: (val: V) => boolean): FilteredList<V>{
+        return new FilteredList(this.store, pred)
+    }
 
 }

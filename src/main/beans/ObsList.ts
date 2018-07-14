@@ -1,6 +1,7 @@
 import {ArrayChangeListener, Predicate, ValueChangeListener} from "../types";
 import ObsValue from "./ObsValue";
-import ListFilterBinding from "./binding/ListFilterBinding";
+import FilteredList from "./binding/FilteredList";
+import ValueObject from "../domain/ValueObject";
 
 export default class ObsList<T> {
 
@@ -51,6 +52,7 @@ export default class ObsList<T> {
     }
 
     public remove(...values: T[]) {
+        // これ意味あるのか
         const obsValues = values.map(it => new ObsValue(it))
         obsValues.forEach(it => it.removeListener(this.onElementChangeObj))
 
@@ -67,9 +69,16 @@ export default class ObsList<T> {
         }
     }
 
-    public removeIf(predicate: (val: T) => boolean) {
+    /**
+     *
+     * @param {(val: T) => boolean} predicate
+     * @returns {number} 削除した件数
+     */
+    public removeIf(predicate: (val: T) => boolean): number {
+        const preLength = this.values().length
         const removes = this.values().filter(it => predicate(it))
         this.remove(...removes)
+        return this.values().length - preLength
     }
 
     public clear() {
@@ -109,8 +118,8 @@ export default class ObsList<T> {
         return this._val.map(it => it.val)
     }
 
-    public bindFilter(pred: Predicate<T>): ListFilterBinding<T> {
-        return new ListFilterBinding(this, pred)
+    public bindFilter(pred: Predicate<T>): FilteredList<T> {
+        return new FilteredList(this, pred)
     }
 
     private onElementChange(val: T, oldVal: T) {

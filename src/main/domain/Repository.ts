@@ -1,6 +1,8 @@
 import EntityKey from "./EntityKey";
 import Entity from "./Entity";
 import MemoryStore from "./MemoryStore";
+import ObsList from "../beans/ObsList";
+import FilteredList from "../beans/binding/FilteredList";
 
 export default abstract class Repository<K extends EntityKey, E extends Entity<K>> {
 
@@ -13,7 +15,6 @@ export default abstract class Repository<K extends EntityKey, E extends Entity<K
     insert(entity: E): void {
         // サブクラスで登録前に処理を挟む場合ここで
         this.preInsert(entity)
-
         this.store.insert(entity)
     }
 
@@ -43,5 +44,8 @@ export default abstract class Repository<K extends EntityKey, E extends Entity<K
         return this.store.has(key)
     }
 
-    // TODO: listFilterなどを必要に応じて子クラスで定義
+    bindFilter(pred: (entity: E) => boolean = it => true): FilteredList<E>{
+        // 引数を省略すると全取得
+        return this.store.bindFilter(pred)
+    }
 }

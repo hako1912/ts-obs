@@ -22,4 +22,5 @@ export default class SurrogateKeyEntity extends Entity<SurrogateKey> {
         }
         this.id = key
     }
+
 }
