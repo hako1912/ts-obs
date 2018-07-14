@@ -1,11 +1,15 @@
 {
   "name": "@hako1912/ts-utils",
-  "version": "1.0.0",
+  "version": "0.0.1",
   "main": "index.js",
   "repository": "git@github.com:hako1912/ts-utils.git",
   "author": "koya",
   "license": "MIT",
   "private": false,
+  "files": [
+    "tsconfig.json",
+    "dist/main"
+  ],
   "dependencies": {
     "typescript": "^2.9.2"
   },
