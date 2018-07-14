@@ -22,7 +22,7 @@ describe("Repository", () => {
         assert.equal(rep.findBy(new TestEntityKey('hoge')), entUpdate)
 
         // 削除
-        rep.remove(new TestEntityKey('hoge'))
+        rep.deleteBy(new TestEntityKey('hoge'))
         assert.equal(rep.size(), 0)
     });
 });
