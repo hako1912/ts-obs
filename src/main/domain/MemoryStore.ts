@@ -1,5 +1,5 @@
-import ValueObject from "@/domain/ValueObject";
-import Entity from "@/domain/Entity";
+import ValueObject from "./ValueObject";
+import Entity from "./Entity";
 
 export class Entry<K, V> {
     constructor(private _key: K, private _val: V) {

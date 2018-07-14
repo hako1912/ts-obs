@@ -1,6 +1,6 @@
 import {ArrayChangeListener, Predicate, ValueChangeListener} from "../types";
-import ObsValue from "@/beans/ObsValue";
-import ListFilterBinding from "@/beans/binding/ListFilterBinding";
+import ObsValue from "./ObsValue";
+import ListFilterBinding from "./binding/ListFilterBinding";
 
 export default class ObsList<T> {
 

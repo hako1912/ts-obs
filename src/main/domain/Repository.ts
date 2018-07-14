@@ -1,6 +1,6 @@
-import Entity from "@/domain/Entity";
-import MemoryStore from "@/domain/MemoryStore";
-import EntityKey from "@/domain/EntityKey";
+import EntityKey from "./EntityKey";
+import Entity from "./Entity";
+import MemoryStore from "./MemoryStore";
 
 export default abstract class Repository<K extends EntityKey, E extends Entity<K>> {
 
