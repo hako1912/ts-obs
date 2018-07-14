@@ -1,10 +1,9 @@
 import SurrogateKeyEntity from "../../main/domain/SurrogateKeyEntity";
 import SurrogateKeyRepository from "../../main/domain/SurrogateKeyRepository";
-import assert = require("power-assert");
 import SurrogateKey from "../../main/domain/SurrogateKey";
+import assert = require("power-assert");
 
 class TestRepository extends SurrogateKeyRepository<TestEntity> {
-
 }
 
 class TestEntity extends SurrogateKeyEntity {
@@ -38,15 +37,4 @@ describe("Repository", () => {
         // 確認
         assert.equal(rep.size(), 0)
     });
-
-    // it("insert 複数件", () => {
-    //     const rep = new TestRepository()
-    //     assert.equal(rep.size(), 0)
-    //     // 登録
-    //     rep.insert(new TestEntity('taro1', 1))
-    //     rep.insert(new TestEntity('taro2', 1))
-    //     rep.insert(new TestEntity('taro3', 1))
-    //     // 確認
-    //     assert.equal(rep.size(), 3)
-    // });
 });
