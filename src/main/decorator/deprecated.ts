@@ -1,6 +1,3 @@
-// export default function deprecated(){}
-
-
+// marker decorator
 const deprecated: any = undefined
-
 export default deprecated

@@ -45,3 +45,13 @@ describe("ObservableList", () => {
         assert.equal(oldVal, 'vals')
     });
 });
+
+class A {
+    aVal: number = 0
+}
+class B {
+    bVal: number = 0
+}
+class Bwrap extends A {}
+
+const hoge = <A & B>{}

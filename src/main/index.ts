@@ -8,7 +8,6 @@ export * from './domain/SurrogateKeyEntity'
 export * from './domain/RepositoryFilter'
 // beans
 export * from './beans/ValueObject'
-export * from './beans/Copyable'
 export * from './beans/ObservableList'
 export * from './beans/ObservableValue'
 export * from './beans/binding/FilteredList'

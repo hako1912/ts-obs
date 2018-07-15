@@ -17,10 +17,6 @@ export default class ObservableList<T> {
         })
     }
 
-    //  obsValues(): ObservableValue<T>[] {
-    //     return this._obsValues
-    // }
-
     get values(): T[] {
         return this._obsValues.map(it => it.value)
     }
@@ -91,7 +87,7 @@ export default class ObservableList<T> {
         return this.values.length - preLength
     }
 
-    public clear() {
+    public clear(): void {
         if (this._obsValues.length === 0) {
             return
         }
