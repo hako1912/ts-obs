@@ -1,13 +1,12 @@
 import FilteredList from "../beans/binding/FilteredList";
-import Repository from "./Repository";
 import Predicates from "../funciton/Predicates";
-import EntityKey from "./EntityKey";
-import Entity from "./Entity";
+import SurrogateKeyEntity from "./SurrogateKeyEntity";
+import SurrogateKeyRepository from "./SurrogateKeyRepository";
 
 
-export default abstract class RepositoryFilter<K extends EntityKey, E extends Entity<K>, R extends Repository<K, E>> {
+export default abstract class RepositoryFilter<E extends SurrogateKeyEntity> {
 
-    abstract getRepository(): R
+    abstract getRepository(): SurrogateKeyRepository<E>
 
     all(): FilteredList<E> {
         return new FilteredList(this.getRepository().store, Predicates.always)
