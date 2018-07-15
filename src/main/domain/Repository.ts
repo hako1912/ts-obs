@@ -1,15 +1,17 @@
 import EntityKey from "./EntityKey";
 import Entity from "./Entity";
 import ObservableList from "../beans/ObservableList";
-import FilteredList from "../beans/binding/FilteredList";
 import {Functions} from "../funciton/funciton";
-import {Predicate} from "../types";
-import Predicates from "../funciton/Predicates";
 import eq = Functions.eq;
 
 export default abstract class Repository<K extends EntityKey, E extends Entity<K>> {
 
-    protected store: ObservableList<E> = new ObservableList()
+    protected _store: ObservableList<E> = new ObservableList()
+
+    get store(): ObservableList<E> {
+        return this._store
+    }
+
 
     preInsert(entity: E) {
         // noop
@@ -73,10 +75,5 @@ export default abstract class Repository<K extends EntityKey, E extends Entity<K
     has(key: K): boolean {
         const find = this.store.find(it => it.key().eq(key))
         return find != null
-    }
-
-    bindFilter(pred: Predicate<E> = Predicates.always): FilteredList<E> {
-        // 引数を省略すると全取得
-        return this.store.bindFilter(pred)
     }
 }

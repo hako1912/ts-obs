@@ -10,7 +10,7 @@ export default abstract class RepositoryFilter<K extends EntityKey, E extends En
     abstract getRepository(): R
 
     all(): FilteredList<E> {
-        return this.getRepository().bindFilter(Predicates.always)
+        return new FilteredList(this.getRepository().store, Predicates.always)
     }
 
 }

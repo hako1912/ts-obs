@@ -1,10 +1,8 @@
 import {Class} from "../types";
-import {Functions} from "../funciton/funciton";
 
 
 export default class Dependencies {
 
-    // class instance map
     static container: Map<Class<any>, any> = new Map()
 
     static inject<T>(clazz: Class<T>): T {

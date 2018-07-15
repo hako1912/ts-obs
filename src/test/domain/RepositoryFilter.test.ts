@@ -10,25 +10,25 @@ describe("RepositoryFilter", () => {
     it("all", () => {
         const rep = Dependencies.inject(TestRepository)
         const repFilter = new TestRepositoryFilter()
-        assert.equal(repFilter.all().flatValues().length, 0)
+        assert.equal(repFilter.all().values.length, 0)
 
         // 登録
         const entInsert = new TestEntity('hoge', 1)
         rep.insert(entInsert)
-        assert.equal(repFilter.all().flatValues().length, 1)
-        assert.equal(repFilter.all().flatValues()[0], entInsert)
+        assert.equal(repFilter.all().values.length, 1)
+        assert.equal(repFilter.all().values[0], entInsert)
 
         // 更新
         const entUpdate = new TestEntity('hoge', 2)
         rep.update(entUpdate, new TestEntityKey('hoge'))
         assert.equal(rep.size(), 1)
-        assert.equal(repFilter.all().flatValues().length, 1)
-        assert.equal(repFilter.all().flatValues()[0], entUpdate)
+        assert.equal(repFilter.all().values.length, 1)
+        assert.equal(repFilter.all().values[0], entUpdate)
 
         // 削除
         rep.deleteBy(new TestEntityKey('hoge'))
         assert.equal(rep.size(), 0)
-        assert.equal(repFilter.all().flatValues().length, 0)
+        assert.equal(repFilter.all().values.length, 0)
     });
 });
 
