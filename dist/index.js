@@ -158,6 +158,18 @@ eval("\r\n// export default function deprecated(){}\r\nObject.defineProperty(exp
 
 /***/ }),
 
+/***/ "./src/main/di/Dependencies.ts":
+/*!*************************************!*\
+  !*** ./src/main/di/Dependencies.ts ***!
+  \*************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+eval("\r\nObject.defineProperty(exports, \"__esModule\", { value: true });\r\nclass Dependencies {\r\n    static inject(clazz) {\r\n        const instance = Dependencies.container.get(clazz);\r\n        if (instance) {\r\n            return instance;\r\n        }\r\n        const newInstance = new clazz();\r\n        Dependencies.container.set(clazz, newInstance);\r\n        return newInstance;\r\n    }\r\n}\r\nDependencies.container = new Map();\r\nexports.default = Dependencies;\r\n\n\n//# sourceURL=webpack:///./src/main/di/Dependencies.ts?");
+
+/***/ }),
+
 /***/ "./src/main/domain/Entity.ts":
 /*!***********************************!*\
   !*** ./src/main/domain/Entity.ts ***!
@@ -274,7 +286,7 @@ eval("\r\nvar __importDefault = (this && this.__importDefault) || function (mod)
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-eval("\r\nfunction __export(m) {\r\n    for (var p in m) if (!exports.hasOwnProperty(p)) exports[p] = m[p];\r\n}\r\nObject.defineProperty(exports, \"__esModule\", { value: true });\r\n// domain\r\n__export(__webpack_require__(/*! ./domain/Repository */ \"./src/main/domain/Repository.ts\"));\r\n__export(__webpack_require__(/*! ./domain/Entity */ \"./src/main/domain/Entity.ts\"));\r\n__export(__webpack_require__(/*! ./domain/SurrogateKey */ \"./src/main/domain/SurrogateKey.ts\"));\r\n__export(__webpack_require__(/*! ./domain/SurrogateKeyRepository */ \"./src/main/domain/SurrogateKeyRepository.ts\"));\r\n__export(__webpack_require__(/*! ./domain/SurrogateKeyEntity */ \"./src/main/domain/SurrogateKeyEntity.ts\"));\r\n__export(__webpack_require__(/*! ./domain/RepositoryFilter */ \"./src/main/domain/RepositoryFilter.ts\"));\r\n// beans\r\n__export(__webpack_require__(/*! ./beans/ValueObject */ \"./src/main/beans/ValueObject.ts\"));\r\n__export(__webpack_require__(/*! ./beans/ObservableList */ \"./src/main/beans/ObservableList.ts\"));\r\n__export(__webpack_require__(/*! ./beans/ObservableValue */ \"./src/main/beans/ObservableValue.ts\"));\r\n__export(__webpack_require__(/*! ./beans/binding/FilteredList */ \"./src/main/beans/binding/FilteredList.ts\"));\r\n__export(__webpack_require__(/*! ./beans/binding/ValueBinding */ \"./src/main/beans/binding/ValueBinding.ts\"));\r\n\n\n//# sourceURL=webpack:///./src/main/index.ts?");
+eval("\r\nfunction __export(m) {\r\n    for (var p in m) if (!exports.hasOwnProperty(p)) exports[p] = m[p];\r\n}\r\nObject.defineProperty(exports, \"__esModule\", { value: true });\r\n// domain\r\n__export(__webpack_require__(/*! ./domain/Repository */ \"./src/main/domain/Repository.ts\"));\r\n__export(__webpack_require__(/*! ./domain/Entity */ \"./src/main/domain/Entity.ts\"));\r\n__export(__webpack_require__(/*! ./domain/SurrogateKey */ \"./src/main/domain/SurrogateKey.ts\"));\r\n__export(__webpack_require__(/*! ./domain/SurrogateKeyRepository */ \"./src/main/domain/SurrogateKeyRepository.ts\"));\r\n__export(__webpack_require__(/*! ./domain/SurrogateKeyEntity */ \"./src/main/domain/SurrogateKeyEntity.ts\"));\r\n__export(__webpack_require__(/*! ./domain/RepositoryFilter */ \"./src/main/domain/RepositoryFilter.ts\"));\r\n// beans\r\n__export(__webpack_require__(/*! ./beans/ValueObject */ \"./src/main/beans/ValueObject.ts\"));\r\n__export(__webpack_require__(/*! ./beans/ObservableList */ \"./src/main/beans/ObservableList.ts\"));\r\n__export(__webpack_require__(/*! ./beans/ObservableValue */ \"./src/main/beans/ObservableValue.ts\"));\r\n__export(__webpack_require__(/*! ./beans/binding/FilteredList */ \"./src/main/beans/binding/FilteredList.ts\"));\r\n__export(__webpack_require__(/*! ./beans/binding/ValueBinding */ \"./src/main/beans/binding/ValueBinding.ts\"));\r\n// function\r\n__export(__webpack_require__(/*! ./funciton/funciton */ \"./src/main/funciton/funciton.ts\"));\r\n__export(__webpack_require__(/*! ./funciton/Predicates */ \"./src/main/funciton/Predicates.ts\"));\r\n//\r\n__export(__webpack_require__(/*! ./di/Dependencies */ \"./src/main/di/Dependencies.ts\"));\r\n\n\n//# sourceURL=webpack:///./src/main/index.ts?");
 
 /***/ })
 

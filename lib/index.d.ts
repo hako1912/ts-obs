@@ -11,3 +11,6 @@ export * from './beans/ObservableList';
 export * from './beans/ObservableValue';
 export * from './beans/binding/FilteredList';
 export * from './beans/binding/ValueBinding';
+export * from './funciton/funciton';
+export * from './funciton/Predicates';
+export * from './di/Dependencies';
