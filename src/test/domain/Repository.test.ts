@@ -27,7 +27,6 @@ describe("Repository", () => {
     });
 });
 
-
 class TestRepository extends Repository<TestEntityKey, TestEntity> {
 
 }
@@ -39,7 +38,7 @@ class TestEntity extends Entity<TestEntityKey> {
         super()
     }
 
-    key(): TestEntityKey {
+    get key(): TestEntityKey {
         return new TestEntityKey(this.name);
     }
 

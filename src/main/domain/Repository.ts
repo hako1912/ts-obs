@@ -1,17 +1,16 @@
 import EntityKey from "./EntityKey";
 import Entity from "./Entity";
-import ObservableList from "../beans/ObservableList";
 import {functions} from "../funciton/functions";
+import IndexedList from "../beans/binding/IndexedList";
 import eq = functions.eq;
 
 export default abstract class Repository<K extends EntityKey, E extends Entity<K>> {
 
-    protected _store: ObservableList<E> = new ObservableList()
+    protected _store = new IndexedList<K, E>(it => it.key)
 
-    get store(): ObservableList<E> {
+    get store(): IndexedList<K, E> {
         return this._store
     }
-
 
     preInsert(entity: E) {
         // noop
@@ -23,12 +22,12 @@ export default abstract class Repository<K extends EntityKey, E extends Entity<K
         // サブクラスで登録前に処理を挟む場合ここで
         this.preInsert(val)
 
-        if (this.has(val.key())) {
+        if (this.has(val.key)) {
             // すでに存在するキーに対して挿入しようとした場合
-            throw Error(`key of ${val.key()} is already exists`)
+            throw Error(`key of ${val.key} is already exists`)
         }
         // key validation
-        if (val.key() == null) {
+        if (val.key == null) {
             throw Error('undefined key')
         }
         this.store.push(val)
@@ -56,7 +55,7 @@ export default abstract class Repository<K extends EntityKey, E extends Entity<K
 
     deleteBy(key: K): number {
         console.log(`deleteBy: key=${JSON.stringify(key)}`)
-        return this.store.removeIf(it => eq(it.key(), key))
+        return this.store.removeIf(it => eq(it.key, key))
     }
 
     size(): number {
@@ -65,15 +64,15 @@ export default abstract class Repository<K extends EntityKey, E extends Entity<K
 
     findBy(key: K): E {
         console.log(`findBy: key=${JSON.stringify(key)}`)
-        const val = this.store.find(it => eq(it.key(), key))
+        const val = this.store.find(it => eq(it.key, key))
         if (val == null) {
-            throw Error('no value present')
+            throw Error(`no value present. key=${JSON.stringify(key)}`)
         }
         return val
     }
 
     has(key: K): boolean {
-        const find = this.store.find(it => it.key().eq(key))
+        const find = this.store.find(it => it.key.eq(key))
         return find != null
     }
 }

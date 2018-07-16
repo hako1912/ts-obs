@@ -6,6 +6,9 @@ import {CustomMap} from "../CustomMap";
 // K: key
 // V: value
 export default class IndexedList<K, T> extends ObservableList<T> {
+
+    // TODO: JoinedListを使う場合、keySupplierの戻り値を関数にしてはいけない
+    // ※クラス同士を合成するとき、関数をもってこれない
     constructor(private _keySupplier: (val: T) => K) {
         super()
     }

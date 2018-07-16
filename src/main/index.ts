@@ -10,7 +10,6 @@ export * from './domain/Entity'
 export * from './domain/SurrogateKey'
 export * from './domain/SurrogateKeyRepository'
 export * from './domain/SurrogateKeyEntity'
-export * from './domain/RepositoryFilter'
 // beans
 export * from './beans/ValueObject'
 export * from './beans/ObservableList'
