@@ -38,7 +38,7 @@ describe("IndexedList", () => {
     });
 
     it("push 連番エンティティ", () => {
-        const list = new IndexedList<SurrogateKey, TestEntity>(it => it.key)
+        const list = new IndexedList<SurrogateKey, TestEntity>(it => it.$key)
 
         const e1 = new TestEntity()
         e1.assignKey(new SurrogateKey(1))

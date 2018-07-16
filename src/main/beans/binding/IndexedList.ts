@@ -3,7 +3,7 @@ import ObservableList from "../ObservableList";
 import ObservableValue from "../ObservableValue";
 
 
-// K: key
+// K: $key
 // V: value
 export default class IndexedList<K, T> extends ObservableList<T> {
 
@@ -22,7 +22,7 @@ export default class IndexedList<K, T> extends ObservableList<T> {
     }
 
     public push(...values: T[]): ObservableValue<T>[] {
-        // validate duplicate key
+        // validate duplicate $key
         const keyValues = values.map(it => {
             const key = this._keySupplier(it)
             if(!key){

@@ -38,7 +38,7 @@ class TestEntity extends Entity<TestEntityKey> {
         super()
     }
 
-    get key(): TestEntityKey {
+    get $key(): TestEntityKey {
         return new TestEntityKey(this.name);
     }
 

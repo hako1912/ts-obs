@@ -27,11 +27,9 @@ describe("Repository", () => {
         assert.equal(rep.size(), 0)
     });
 
-    it("join", () => {
+    it("join： 連番キーのエンティティ", () => {
         const leftRep = new TestRepository()
         const rightRep = new TestRepository2()
-
-
 
         const join = new LeftJoinedList(leftRep.store, rightRep.store)
 
@@ -50,7 +48,7 @@ describe("Repository", () => {
         assert.equal(join.values[0].val1, 1)
         assert.equal(join.values[0].val2, 2)
 
-        leftRep.insert(new TestEntity('csss', 10))
+        leftRep.insert(new TestEntity('c', 10))
         assert.equal(join.values.length, 2)
         assert.equal(join.values[0].val1, 1)
         assert.equal(join.values[0].val2, 2)

@@ -40,7 +40,7 @@ describe("CustomMap", () => {
         assert.deepEqual(map.values, ['b', 'c', 'A'])
     });
 
-    it("has: primitive key", () => {
+    it("has: primitive $key", () => {
         const map = new CustomMap<number, string>()
         map.put(1, 'a')
         map.put(2, 'b')
@@ -53,7 +53,7 @@ describe("CustomMap", () => {
         assert.deepEqual(map.has(4), false)
     });
 
-    it("has: ValueObject key", () => {
+    it("has: ValueObject $key", () => {
         const map = new CustomMap<Vo, string>()
         map.put(new Vo(1), 'a')
         map.put(new Vo(2), 'b')
@@ -82,7 +82,7 @@ describe("CustomMap", () => {
         assert.deepEqual(map.keys, [1, 2, 3])
     });
 
-    it("find: primitive key", () => {
+    it("find: primitive $key", () => {
         const map = new CustomMap<number, string>()
         map.put(1, 'a')
         map.put(2, 'b')
@@ -92,7 +92,7 @@ describe("CustomMap", () => {
         assert.deepEqual(map.find(3), 'c')
     });
 
-    it("find: ValueObject key", () => {
+    it("find: ValueObject $key", () => {
         const map = new CustomMap<Vo, string>()
         map.put(new Vo(1), 'a')
         map.put(new Vo(2), 'b')
