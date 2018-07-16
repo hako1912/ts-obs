@@ -1,9 +1,9 @@
 import * as assert from "power-assert";
-import ObsValue from "../../main/beans/ObsValue";
+import ObservableValue from "../../main/beans/ObservableValue";
 
-describe("ObsValue", () => {
+describe("ObservableValue", () => {
     it("addListener", () => {
-        const obs = new ObsValue('init')
+        const obs = new ObservableValue('init')
         let target = 0
         obs.addListener((val, oldVal) => {
             target = 1

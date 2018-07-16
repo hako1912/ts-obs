@@ -1,11 +1,26 @@
 import {ValueChangeListener} from "../types";
+import deprecated from "../decorator/deprecated";
 
-export default class ObsValue<T> {
+export default class ObservableValue<T> {
     protected listeners: ValueChangeListener<T>[] = []
 
     constructor(private _val: T) {
     }
 
+    get value(): T {
+        return this._val
+    }
+
+    set value(value: T) {
+        if (this.val == value) {
+            return
+        }
+        const old = this.val
+        this._val = value
+        this.listeners.forEach(lis => lis(value, old))
+    }
+
+    @deprecated
     get val(): T {
         return this._val
     }

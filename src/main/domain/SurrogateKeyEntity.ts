@@ -5,7 +5,7 @@ export default class SurrogateKeyEntity extends Entity<SurrogateKey> {
     // 登録時に発行される
     protected id?: SurrogateKey
 
-    key(): SurrogateKey {
+    get key(): SurrogateKey {
         if (!this.id) {
             throw new Error('unassigned key')
         }
@@ -16,10 +16,11 @@ export default class SurrogateKeyEntity extends Entity<SurrogateKey> {
         return this.id != null
     }
 
-    public assigneKey(key: SurrogateKey) {
+    public assignKey(key: SurrogateKey) {
         if (this.id) {
             throw new Error('already unassigned')
         }
         this.id = key
     }
+
 }

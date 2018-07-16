@@ -1,26 +1,31 @@
-import {ArrayChangeListener, Predicate, ValueChangeListener} from "../types";
-import ObsValue from "./ObsValue";
-import ListFilterBinding from "./binding/ListFilterBinding";
+import {ArrayChangeListener, ValueChangeListener} from "../types";
+import ObservableValue from "./ObservableValue";
+import deprecated from "../decorator/deprecated";
 
-export default class ObsList<T> {
+// 保持するObservableValueはサブクラスのみ参照可にする
+export default class ObservableList<T> {
 
     onElementChangeObj: ValueChangeListener<T> = this.onElementChange.bind(this)
     protected arrayListeners: ArrayChangeListener<T>[] = []
     protected elementListeners: ValueChangeListener<T>[] = []
 
-    constructor(private _val: ObsValue<T>[] = []) {
-        this._val.forEach(obs => {
+    constructor(protected _obsValues: ObservableValue<T>[] = []) {
+        this._obsValues.forEach(obs => {
             obs.addListener(this.onElementChangeObj)
         })
     }
 
-
-    get val(): ObsValue<T>[] {
-        return this._val
+    get values(): T[] {
+        return this._obsValues.map(it => it.value)
     }
 
-    set val(value: ObsValue<T>[]) {
-        this._val = value
+    @deprecated
+    get val(): ObservableValue<T>[] {
+        return this._obsValues
+    }
+
+    set val(value: ObservableValue<T>[]) {
+        this._obsValues = value
     }
 
     public addElementListener(listener: ValueChangeListener<T>) {
@@ -39,23 +44,23 @@ export default class ObsList<T> {
         this.elementListeners = this.elementListeners.filter(it => listener !== it)
     }
 
-    public push(...values: T[]): ObsValue<T>[] {
+    public push(...values: T[]): ObservableValue<T>[] {
         if (values.length === 0) {
             return []
         }
-        const appends = values.map(it => new ObsValue(it))
-        this._val.push(...appends)
+        const appends = values.map(it => new ObservableValue(it))
+        this._obsValues.push(...appends)
         this.arrayListeners.forEach(lis => lis(values, []))
         appends.forEach(it => it.addListener(this.onElementChangeObj))
         return appends
     }
 
     public remove(...values: T[]) {
-        const obsValues = values.map(it => new ObsValue(it))
-        obsValues.forEach(it => it.removeListener(this.onElementChangeObj))
+        // const obsValues = values.map(it => new ObservableValue(it))
+        // obsValues.forEach(it => it.removeListener(this.onElementChangeObj))
 
         const removes: T[] = []
-        this._val = this._val.filter(it => {
+        this._obsValues = this._obsValues.filter(it => {
             if (values.indexOf(it.val) === -1) {
                 return true
             }
@@ -67,22 +72,26 @@ export default class ObsList<T> {
         }
     }
 
-    public removeIf(predicate: (val: T) => boolean) {
-        const removes = this.values().filter(it => predicate(it))
+
+    public removeIf(predicate: (val: T) => boolean): number {
+        const preLength = this.values.length
+        const removes = this.values.filter(it => predicate(it))
         this.remove(...removes)
+        // 削除した件数を返す
+        return this.values.length - preLength
     }
 
-    public clear() {
-        if (this._val.length === 0) {
+    public clear(): void {
+        if (this._obsValues.length === 0) {
             return
         }
-        const oldVal = this.values()
-        this._val = []
+        const oldVal = this.values
+        this._obsValues = []
         this.arrayListeners.forEach(lis => lis([], oldVal))
     }
 
     public isEmpty(): boolean {
-        return this._val.length === 0
+        return this._obsValues.length === 0
     }
 
     public isNotEmpty(): boolean {
@@ -90,27 +99,19 @@ export default class ObsList<T> {
     }
 
     public map<R>(func: (val: T) => R): R[] {
-        return this.values().map(func)
+        return this.values.map(func)
     }
 
     public filter(func: (val: T) => boolean): T[] {
-        return this.values().filter(func)
+        return this.values.filter(func)
     }
 
     public find(func: (val: T) => boolean): T | undefined {
-        return this.values().find(func)
+        return this.values.find(func)
     }
 
     public forEach(func: (val: T) => void): void {
-        this.values().forEach(func)
-    }
-
-    public values(): T[] {
-        return this._val.map(it => it.val)
-    }
-
-    public bindFilter(pred: Predicate<T>): ListFilterBinding<T> {
-        return new ListFilterBinding(this, pred)
+        this.values.forEach(func)
     }
 
     private onElementChange(val: T, oldVal: T) {

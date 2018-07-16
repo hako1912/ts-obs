@@ -1,9 +1,9 @@
 import * as assert from "power-assert";
-import ObsList from "../../main/beans/ObsList";
+import ObservableList from "../../main/beans/ObservableList";
 
-describe("ObsList", () => {
+describe("ObservableList", () => {
     it("配列変更", () => {
-        const obs = new ObsList<string>()
+        const obs = new ObservableList<string>()
 
         let appends: string[] = []
         let removes: string[] = []
@@ -30,8 +30,8 @@ describe("ObsList", () => {
     });
 
     it("要素変更", () => {
-        const obs = new ObsList<string>()
-        obs.push('val')
+        const obs = new ObservableList<string>()
+        obs.push('vals')
 
         let val: string = ''
         let oldVal: string = ''
@@ -42,6 +42,16 @@ describe("ObsList", () => {
 
         obs.val[0].val = 'change'
         assert.equal(val, 'change')
-        assert.equal(oldVal, 'val')
+        assert.equal(oldVal, 'vals')
     });
 });
+
+class A {
+    aVal: number = 0
+}
+class B {
+    bVal: number = 0
+}
+class Bwrap extends A {}
+
+const hoge = <A & B>{}
