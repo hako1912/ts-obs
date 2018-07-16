@@ -36,6 +36,14 @@ export class CustomMap<K, V> {
         this.entries.push(new CustomMap.Entry(key, value))
     }
 
+    clear(): void {
+        this.entries = []
+    }
+
+    forEach(func: (value: V, key: K) => void): void {
+        this.entries.forEach(it => func(it.value, it.key))
+    }
+
     has(key: K): boolean {
         return this.find(key) ? true : false
     }

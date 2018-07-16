@@ -1,5 +1,6 @@
 import ObservableList from "../ObservableList";
 import ObservableValue from "../ObservableValue";
+import {CustomMap} from "../CustomMap";
 
 
 // K: key
@@ -9,9 +10,9 @@ export default class IndexedList<K, T> extends ObservableList<T> {
         super()
     }
 
-    private _keyValueMap = new Map<K, T>()
+    private _keyValueMap = new CustomMap<K, T>()
 
-    get keyValueMap(): Map<K, T> {
+    get keyValueMap(): CustomMap<K, T> {
         return this._keyValueMap;
     }
 
@@ -32,13 +33,13 @@ export default class IndexedList<K, T> extends ObservableList<T> {
             throw new Error(`duplicated keys: ${errors}`)
         }
 
-        keyValues.forEach(it => this._keyValueMap.set(it.key, it.val))
+        keyValues.forEach(it => this._keyValueMap.put(it.key, it.val))
         return super.push(...values)
     }
 
 
     remove(...values: T[]): void {
-        values.map(it => this._keySupplier(it)).forEach(it => this._keyValueMap.delete(it))
+        values.map(it => this._keySupplier(it)).forEach(it => this._keyValueMap.remove(it))
         super.remove(...values);
     }
 

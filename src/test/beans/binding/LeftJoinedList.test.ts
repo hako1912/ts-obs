@@ -1,6 +1,7 @@
 import IndexedList from "../../../main/beans/binding/IndexedList";
 import LeftJoinedList from "../../../main/beans/binding/LeftJoinedList";
 import * as assert from "power-assert";
+import ValueObject from "../../../main/beans/ValueObject";
 
 class A {
     constructor(public id: number,
@@ -79,4 +80,26 @@ describe("LeftJoinedList", () => {
         assert.equal(joinings.values[0].valA, 'a1')
         assert.equal(joinings.values[0].valB, 'b1')
     });
+
+    it("key of ValueObject", () => {
+        const lefts: IndexedList<Vo, A> = new IndexedList(it => new Vo(it.id))
+        const rights: IndexedList<Vo, B> = new IndexedList(it => new Vo(it.id))
+        const joinings = new LeftJoinedList(lefts, rights)
+
+        rights.push(new B(1, 'b1'))
+        assert.equal(joinings.values.length, 0)
+
+        lefts.push(new A(1, 'a1'))
+        assert.equal(joinings.values.length, 1)
+        assert.equal(joinings.values[0].valA, 'a1')
+        assert.equal(joinings.values[0].valB, 'b1')
+    });
 });
+
+class Vo extends ValueObject {
+    constructor(private id: number){super()}
+    eq(val: this): boolean {
+        return this.id === val.id;
+    }
+
+}
