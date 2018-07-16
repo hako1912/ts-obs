@@ -14,11 +14,6 @@ export default class ObservableList<T> {
     removeElementListener(listener: ValueChangeListener<T>): void;
     push(...values: T[]): ObservableValue<T>[];
     remove(...values: T[]): void;
-    /**
-     *
-     * @param {(val: T) => boolean} predicate
-     * @returns {number} 削除した件数
-     */
     removeIf(predicate: (val: T) => boolean): number;
     clear(): void;
     isEmpty(): boolean;
