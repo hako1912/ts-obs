@@ -26,6 +26,10 @@ export default class IndexedList<K, T> extends ObservableList<T> {
     public push(...values: T[]): ObservableValue<T>[] {
         // validate duplicate key
         const keyValues = values.map(it => {
+            const key = this._keySupplier(it)
+            if(!key){
+                throw new Error('キーが取得できない。')
+            }
             return {
                 key: this._keySupplier(it),
                 val: it

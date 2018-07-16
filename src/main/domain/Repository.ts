@@ -17,10 +17,10 @@ export default abstract class Repository<K extends EntityKey, E extends Entity<K
     }
 
     insert(val: E): void {
-        console.log(`insert: val=${JSON.stringify(val)}`)
-
         // サブクラスで登録前に処理を挟む場合ここで
         this.preInsert(val)
+        console.log(`insert: val=${JSON.stringify(val)}`)
+
 
         if (this.has(val.key)) {
             // すでに存在するキーに対して挿入しようとした場合
@@ -38,10 +38,9 @@ export default abstract class Repository<K extends EntityKey, E extends Entity<K
     }
 
     update(newVal: E, key: K) {
-        console.log(`update: key=${JSON.stringify(key)}, newVal=${JSON.stringify(newVal)}`)
-
         // サブクラスで登録前に処理を挟む場合ここで
         this.preUpdate(newVal, key)
+        console.log(`update: key=${JSON.stringify(key)}, newVal=${JSON.stringify(newVal)}`)
 
         if (!this.has(key)) {
             // 旧値が存在しない場合

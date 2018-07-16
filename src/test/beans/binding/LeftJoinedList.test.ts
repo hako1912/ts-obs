@@ -17,7 +17,7 @@ describe("LeftJoinedList", () => {
         assert.equal(joinings.values[0].valB, 'b1')
     });
 
-    it("constructor only secondaryList", () => {
+    it("サブリストのみ要素をもつ状態で生成", () => {
         const lefts: IndexedList<number, A> = new IndexedList(it => it.id)
         const rights: IndexedList<number, B> = new IndexedList(it => it.id)
 
@@ -29,7 +29,7 @@ describe("LeftJoinedList", () => {
         assert.equal(joinings.values[0].valB, undefined)
     });
 
-    it("constructor only primaryList", () => {
+    it("優先リストのみ要素をもつ状態で生成", () => {
         const lefts: IndexedList<number, A> = new IndexedList(it => it.id)
         const rights: IndexedList<number, B> = new IndexedList(it => it.id)
 
@@ -39,7 +39,26 @@ describe("LeftJoinedList", () => {
         assert.equal(joinings.values.length, 0)
     });
 
-    it("left push -> right push", () => {
+    it("要素追加： サブ->優先->サブ", () => {
+        const lefts: IndexedList<number, A> = new IndexedList(it => it.id)
+        const rights: IndexedList<number, B> = new IndexedList(it => it.id)
+        const joinings = new LeftJoinedList(lefts, rights)
+
+        rights.push(new B(1, 'b1'))
+        assert.equal(joinings.values.length, 0)
+
+        lefts.push(new A(1, 'a1'))
+        assert.equal(joinings.values.length, 1)
+        assert.equal(joinings.values[0].valA, 'a1')
+        assert.equal(joinings.values[0].valB, 'b1')
+
+        rights.push(new B(2, 'b2'))
+        assert.equal(joinings.values.length, 1)
+        assert.equal(joinings.values[0].valA, 'a1')
+        assert.equal(joinings.values[0].valB, 'b1')
+    });
+
+    it("要素追加： 優先->サブ->優先", () => {
         const lefts: IndexedList<number, A> = new IndexedList(it => it.id)
         const rights: IndexedList<number, B> = new IndexedList(it => it.id)
         const joinings = new LeftJoinedList(lefts, rights)
@@ -53,23 +72,16 @@ describe("LeftJoinedList", () => {
         assert.equal(joinings.values.length, 1)
         assert.equal(joinings.values[0].valA, 'a1')
         assert.equal(joinings.values[0].valB, 'b1')
-    });
 
-    it("right push -> left push", () => {
-        const lefts: IndexedList<number, A> = new IndexedList(it => it.id)
-        const rights: IndexedList<number, B> = new IndexedList(it => it.id)
-        const joinings = new LeftJoinedList(lefts, rights)
-
-        rights.push(new B(1, 'b1'))
-        assert.equal(joinings.values.length, 0)
-
-        lefts.push(new A(1, 'a1'))
-        assert.equal(joinings.values.length, 1)
+        lefts.push(new A(2, 'a2'))
+        assert.equal(joinings.values.length, 2)
         assert.equal(joinings.values[0].valA, 'a1')
         assert.equal(joinings.values[0].valB, 'b1')
+        assert.equal(joinings.values[1].valA, 'a2')
+        assert.equal(joinings.values[1].valB, undefined)
     });
 
-    it("key of ValueObject", () => {
+    it("キーがValueObject", () => {
         const lefts: IndexedList<Vo, A> = new IndexedList(it => new Vo(it.id))
         const rights: IndexedList<Vo, B> = new IndexedList(it => new Vo(it.id))
         const joinings = new LeftJoinedList(lefts, rights)
