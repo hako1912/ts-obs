@@ -22,15 +22,27 @@ export namespace functions {
 
     export function mixin<T, U>(first: T, second: U): T & U {
         let result = <T & U>{};
-        for (let id in first) {
+        // 名前が被るプロパティ、関数はfirstで上書きされる
+        for (let id of getProperties(first)) {
             (<any>result)[id] = (<any>first)[id];
         }
-        for (let id in second) {
+        for (let id of getProperties(second)) {
             if (!result.hasOwnProperty(id)) {
                 (<any>result)[id] = (<any>second)[id];
             }
         }
         return result;
     }
+
+    // これでもいけそう
+    // https://stackoverflow.com/questions/30158515/list-down-all-prototype-properties-of-an-javascript-object
+    export function getProperties(obj: any, properties: string[] = []): string[] {
+        if (obj.__proto__ != null) {
+            return getProperties(obj.__proto__, Object.getOwnPropertyNames(obj)).concat(properties)
+        }
+        return properties
+    }
 }
+
+
 
