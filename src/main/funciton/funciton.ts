@@ -15,5 +15,18 @@ export module Functions {
         }
         return val1 == null ? val2 == null : val1 === val2
     }
+
+    export function mixin<T, U>(first: T, second: U): T & U {
+        let result = <T & U>{};
+        for (let id in first) {
+            (<any>result)[id] = (<any>first)[id];
+        }
+        for (let id in second) {
+            if (!result.hasOwnProperty(id)) {
+                (<any>result)[id] = (<any>second)[id];
+            }
+        }
+        return result;
+    }
 }
 

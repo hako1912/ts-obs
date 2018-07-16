@@ -5,10 +5,14 @@ import ObservableValue from "../ObservableValue";
 // K: key
 // V: value
 export default class IndexedList<K, T> extends ObservableList<T> {
-    private keyValueMap = new Map<K, T>()
-
     constructor(private _keySupplier: (val: T) => K) {
         super()
+    }
+
+    private _keyValueMap = new Map<K, T>()
+
+    get keyValueMap(): Map<K, T> {
+        return this._keyValueMap;
     }
 
     get keySupplier(): (val: T) => K {
@@ -23,23 +27,23 @@ export default class IndexedList<K, T> extends ObservableList<T> {
                 val: it
             }
         })
-        const errors = keyValues.map(it => it.key).filter(it => this.keyValueMap.has(it))
+        const errors = keyValues.map(it => it.key).filter(it => this._keyValueMap.has(it))
         if (0 < errors.length) {
             throw new Error(`duplicated keys: ${errors}`)
         }
 
-        keyValues.forEach(it => this.keyValueMap.set(it.key, it.val))
+        keyValues.forEach(it => this._keyValueMap.set(it.key, it.val))
         return super.push(...values)
     }
 
 
     remove(...values: T[]): void {
-        values.map(it => this._keySupplier(it)).forEach(this.keyValueMap.delete)
+        values.map(it => this._keySupplier(it)).forEach(it => this._keyValueMap.delete(it))
         super.remove(...values);
     }
 
     clear(): void {
-        this.keyValueMap.clear()
+        this._keyValueMap.clear()
         super.clear();
     }
 }
