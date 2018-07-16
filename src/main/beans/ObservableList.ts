@@ -1,10 +1,8 @@
-import {ArrayChangeListener, Predicate, ValueChangeListener} from "../types";
+import {ArrayChangeListener, ValueChangeListener} from "../types";
 import ObservableValue from "./ObservableValue";
-import FilteredList from "./binding/FilteredList";
 import deprecated from "../decorator/deprecated";
 
-// 利用側はObservableValueが見れないようにする
-// ※サブクラスはObservableValueを見たいので、取得メソッドをprotectedで提供する
+// 保持するObservableValueはサブクラスのみ参照可にする
 export default class ObservableList<T> {
 
     onElementChangeObj: ValueChangeListener<T> = this.onElementChange.bind(this)
@@ -58,9 +56,8 @@ export default class ObservableList<T> {
     }
 
     public remove(...values: T[]) {
-        // これ意味あるのか
-        const obsValues = values.map(it => new ObservableValue(it))
-        obsValues.forEach(it => it.removeListener(this.onElementChangeObj))
+        // const obsValues = values.map(it => new ObservableValue(it))
+        // obsValues.forEach(it => it.removeListener(this.onElementChangeObj))
 
         const removes: T[] = []
         this._obsValues = this._obsValues.filter(it => {
@@ -75,15 +72,12 @@ export default class ObservableList<T> {
         }
     }
 
-    /**
-     *
-     * @param {(val: T) => boolean} predicate
-     * @returns {number} 削除した件数
-     */
+
     public removeIf(predicate: (val: T) => boolean): number {
         const preLength = this.values.length
         const removes = this.values.filter(it => predicate(it))
         this.remove(...removes)
+        // 削除した件数を返す
         return this.values.length - preLength
     }
 
@@ -119,10 +113,6 @@ export default class ObservableList<T> {
     public forEach(func: (val: T) => void): void {
         this.values.forEach(func)
     }
-
-    // public bindFilter(pred: Predicate<T>): FilteredList<T> {
-    //     return new FilteredList(this, pred)
-    // }
 
     private onElementChange(val: T, oldVal: T) {
         this.elementListeners.forEach(it => it(val, oldVal))

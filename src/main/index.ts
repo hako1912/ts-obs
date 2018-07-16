@@ -1,4 +1,9 @@
 export * from './types'
+// function
+export * from './funciton/functions'
+export * from './funciton/Predicates'
+// DI
+export * from './di/Dependencies'
 // domain
 export * from './domain/Repository'
 export * from './domain/Entity'
@@ -12,8 +17,6 @@ export * from './beans/ObservableList'
 export * from './beans/ObservableValue'
 export * from './beans/binding/FilteredList'
 export * from './beans/binding/ValueBinding'
-// function
-export * from './funciton/funciton'
-export * from './funciton/Predicates'
-//
-export * from './di/Dependencies'
+export * from './beans/binding/IndexedList'
+// export * from './beans/binding/LeftJoinedList'
+

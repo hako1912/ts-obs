@@ -1,6 +1,6 @@
 import IndexedList from "./IndexedList";
-import {Functions} from "../..";
-import mixin = Functions.mixin;
+import {functions} from "../..";
+import mixin = functions.mixin;
 
 // K: key
 // P: primaryList(not null)
@@ -14,19 +14,19 @@ export default class LeftJoinedList<K, P, S> extends IndexedList<K, P & {[E in k
             const secondary = secondaries.keyValueMap.find(k)
             initialValues.push(secondary == null ? v : mixin(v, secondary))
         })
-        // キー生成器は、優先リストであるprimariesのものを使用する
+        // 優先要素は必ず存在するため、優先リストのキー生成器を使用する
         super(it => primaries.keySupplier(it))
         super.push(...initialValues as any)
 
         // 優先リストの変更監視
         primaries.addArrayListener((appends, removes) => {
-            // 追加要素に対しては、サブリストとJOINしたうえで自リストに追加する
+            // サブ要素と結合し、自リストに追加する
             appends.forEach(it => {
                 const key = primaries.keySupplier(it)
                 const secondary = secondaries.keyValueMap.find(key)
                 this.push(secondary == null ? it : mixin(it, secondary) as any)
             })
-            // 削除要素に対しては、無条件で自リストから削除する
+            // 無条件で自リストから削除する
             removes.forEach(it => {
                 const key = primaries.keySupplier(it)
                 const val = this.keyValueMap.find(key)
@@ -36,14 +36,16 @@ export default class LeftJoinedList<K, P, S> extends IndexedList<K, P & {[E in k
                 }
             })
         })
+
         // サブリストの変更監視
         secondaries.addArrayListener((appends, removes) => {
-            // 追加要素に対しては、優先リストとJOINしたうえで自リストに追加する
+            // 優先要素と結合し、自リストに追加する
+            // ※優先要素が存在しない場合は追加しない
             appends.forEach(it => {
                 const key = secondaries.keySupplier(it)
                 const primary = primaries.keyValueMap.find(key)
                 if (primary) {
-                    // すでに存在する自要素を一旦削除する（キー重複いわれるため）
+                    // すでに存在する自要素を一旦削除する
                     if (this.keyValueMap.has(key)) {
                         this.remove(this.keyValueMap.find(key) as any)
                     }
@@ -51,7 +53,7 @@ export default class LeftJoinedList<K, P, S> extends IndexedList<K, P & {[E in k
                     this.push(mixin(it, primary) as any)
                 }
             })
-            // 削除要素に対しては、自リストから削除要素に対応するサブ要素のみ削除する
+            // 自要素からサブ要素のみ削除する
             removes.forEach(it => {
                 const key = secondaries.keySupplier(it)
                 const val = this.keyValueMap.find(key)

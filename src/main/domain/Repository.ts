@@ -1,8 +1,8 @@
 import EntityKey from "./EntityKey";
 import Entity from "./Entity";
 import ObservableList from "../beans/ObservableList";
-import {Functions} from "../funciton/funciton";
-import eq = Functions.eq;
+import {functions} from "../funciton/functions";
+import eq = functions.eq;
 
 export default abstract class Repository<K extends EntityKey, E extends Entity<K>> {
 

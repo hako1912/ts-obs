@@ -3,18 +3,6 @@ import LeftJoinedList from "../../../main/beans/binding/LeftJoinedList";
 import * as assert from "power-assert";
 import ValueObject from "../../../main/beans/ValueObject";
 
-class A {
-    constructor(public id: number,
-                public valA: string) {
-    }
-}
-
-class B {
-    constructor(public id: number,
-                public valB: string) {
-    }
-}
-
 describe("LeftJoinedList", () => {
     it("constructor", () => {
         const lefts: IndexedList<number, A> = new IndexedList(it => it.id)
@@ -97,9 +85,24 @@ describe("LeftJoinedList", () => {
 });
 
 class Vo extends ValueObject {
-    constructor(private id: number){super()}
+    constructor(private id: number) {
+        super()
+    }
+
     eq(val: this): boolean {
         return this.id === val.id;
     }
 
+}
+
+class A {
+    constructor(public id: number,
+                public valA: string) {
+    }
+}
+
+class B {
+    constructor(public id: number,
+                public valB: string) {
+    }
 }

@@ -1,8 +1,6 @@
 import ObservableList from "../ObservableList";
 import ObservableValue from "../ObservableValue";
 
-// TODO: フィルタ条件は最初に渡したもので固定
-// TODO: 条件を動的に変えたいならObsPredをつくる
 export default class FilteredList<T>  extends ObservableList<T>{
     public constructor(
         private obs: ObservableList<T>,
