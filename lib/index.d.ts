@@ -13,3 +13,4 @@ export * from './beans/ObservableValue';
 export * from './beans/binding/FilteredList';
 export * from './beans/binding/ValueBinding';
 export * from './beans/binding/IndexedList';
+export * from './beans/binding/LeftJoinedList';
