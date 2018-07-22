@@ -1,4 +1,4 @@
-import { CustomMap } from './../CustomMap';
+import {CustomMap} from './../CustomMap';
 import ObservableList from "../ObservableList";
 import ObservableValue from "../ObservableValue";
 
@@ -10,6 +10,7 @@ export default class IndexedList<K, T> extends ObservableList<T> {
     constructor(private _keySupplier: (val: T) => K) {
         super()
     }
+
 
     private _keyValueMap = new CustomMap<K, T>()
 
@@ -25,7 +26,7 @@ export default class IndexedList<K, T> extends ObservableList<T> {
         // validate duplicate $key
         const keyValues = values.map(it => {
             const key = this._keySupplier(it)
-            if(!key){
+            if (!key) {
                 throw new Error('キーが取得できない。')
             }
             return {

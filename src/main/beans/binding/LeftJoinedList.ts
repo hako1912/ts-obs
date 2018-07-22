@@ -1,11 +1,13 @@
 import IndexedList from "./IndexedList";
-import {functions} from "../..";
-import mixin = functions.mixin;
-import eq = functions.eq;
+import mixin from "../../funciton/mixin";
+import eq from "../../funciton/eq";
+
+
 
 // K: $key
 // P: primaryList(not null)
 // S: secondaryList(optional)
+
 // TODO: 要素変更の監視
 export default class LeftJoinedList<K, P, S> extends IndexedList<K, P & {[E in keyof S]: E | undefined}> {
     constructor(primaries: IndexedList<K, P>,
@@ -80,8 +82,6 @@ export default class LeftJoinedList<K, P, S> extends IndexedList<K, P & {[E in k
 
         })
     }
-
-
 }
 
 

@@ -1,8 +1,7 @@
 import EntityKey from "./EntityKey";
 import Entity from "./Entity";
-import {functions} from "../funciton/functions";
 import IndexedList from "../beans/binding/IndexedList";
-import eq = functions.eq;
+import eq from "../funciton/eq";
 
 export default abstract class Repository<K extends EntityKey, E extends Entity<K>> {
 
