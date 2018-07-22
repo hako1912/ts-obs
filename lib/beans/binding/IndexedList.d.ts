@@ -1,6 +1,6 @@
+import { CustomMap } from './../CustomMap';
 import ObservableList from "../ObservableList";
 import ObservableValue from "../ObservableValue";
-import { CustomMap } from "../CustomMap";
 export default class IndexedList<K, T> extends ObservableList<T> {
     private _keySupplier;
     constructor(_keySupplier: (val: T) => K);

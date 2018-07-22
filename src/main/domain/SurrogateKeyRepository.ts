@@ -18,5 +18,4 @@ export default abstract class SurrogateKeyRepository<E extends SurrogateKeyEntit
         newValue.assignKey(key)
     }
 
-
 }

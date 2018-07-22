@@ -4,4 +4,5 @@ export declare namespace functions {
     function eq<T>(val1: T, val2: T): boolean;
     function not<T>(val1: T, val2: T): boolean;
     function mixin<T, U>(first: T, second: U): T & U;
+    function getProperties(obj: any, properties?: string[]): string[];
 }

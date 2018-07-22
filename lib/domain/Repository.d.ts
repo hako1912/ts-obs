@@ -1,9 +1,9 @@
 import EntityKey from "./EntityKey";
 import Entity from "./Entity";
-import ObservableList from "../beans/ObservableList";
+import IndexedList from "../beans/binding/IndexedList";
 export default abstract class Repository<K extends EntityKey, E extends Entity<K>> {
-    protected _store: ObservableList<E>;
-    readonly store: ObservableList<E>;
+    protected _store: IndexedList<K, E>;
+    readonly store: IndexedList<K, E>;
     preInsert(entity: E): void;
     insert(val: E): void;
     preUpdate(newVal: E, key: K): void;

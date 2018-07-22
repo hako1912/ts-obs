@@ -1,6 +1,7 @@
 import IndexedList from "./IndexedList";
 import {functions} from "../..";
 import mixin = functions.mixin;
+import eq = functions.eq;
 
 // K: $key
 // P: primaryList(not null)
@@ -8,7 +9,8 @@ import mixin = functions.mixin;
 // TODO: 要素変更の監視
 export default class LeftJoinedList<K, P, S> extends IndexedList<K, P & {[E in keyof S]: E | undefined}> {
     constructor(primaries: IndexedList<K, P>,
-                secondaries: IndexedList<K, S>) {
+                secondaries: IndexedList<K, S>,
+                foreignKeySupplier: (secondaryVal: S) => K = secondaries.keySupplier) {
         // 2つのリストを結合した新しいリストを生成する
         const initialValues: ((P & S) | P)[] = []
         primaries.keyValueMap.forEach((v, k) => {
@@ -36,7 +38,8 @@ export default class LeftJoinedList<K, P, S> extends IndexedList<K, P & {[E in k
             // サブ要素と結合し、自リストに追加する
             appends.forEach(it => {
                 const key = primaries.keySupplier(it)
-                const secondary = secondaries.keyValueMap.find(key)
+                // サブ要素から、優先要素のキーを外部キーにもつ要素を探す
+                const secondary = secondaries.values.find(sec => eq(foreignKeySupplier(sec), key))
                 const current = this.keyValueMap.find(key)
                 if (current) {
                     // 優先要素追加時は自要素が存在しないはずだからいらない気がする
@@ -50,7 +53,7 @@ export default class LeftJoinedList<K, P, S> extends IndexedList<K, P & {[E in k
         secondaries.addArrayListener((appends, removes) => {
             // 自要素からサブ要素のみ削除する
             removes.forEach(it => {
-                const key = secondaries.keySupplier(it)
+                const key = foreignKeySupplier(it)
                 const val = this.keyValueMap.find(key)
                 if (val) {
                     // 一度要素削除してから、優先要素のみで再度挿入する
@@ -62,7 +65,7 @@ export default class LeftJoinedList<K, P, S> extends IndexedList<K, P & {[E in k
             // 優先要素と結合し、自リストに追加する
             // ※優先要素が存在しない場合は追加しない
             appends.forEach(it => {
-                const key = secondaries.keySupplier(it)
+                const key = foreignKeySupplier(it)
                 const primary = primaries.keyValueMap.find(key)
                 if (primary) {
                     // すでに存在する自要素を一旦削除する
