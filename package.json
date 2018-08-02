@@ -1,6 +1,6 @@
 {
   "name": "@hako1912/ts-utils",
-  "version": "0.0.18",
+  "version": "0.0.19",
   "main": "./dist/index.js",
   "types": "./lib/index.d.ts",
   "repository": "git@github.com:hako1912/ts-utils.git",
@@ -21,6 +21,7 @@
     "@types/power-assert": "^1.5.0",
     "espower-typescript": "^9.0.0",
     "mocha": "^5.2.0",
+    "parcel-bundler": "^1.9.7",
     "power-assert": "^1.6.0",
     "ts-loader": "^4.4.2",
     "ts-node": "^7.0.0",
