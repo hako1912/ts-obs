@@ -20,7 +20,7 @@ export default class ObservableValue<T> {
         this.listeners.forEach(lis => lis(value, old))
     }
 
-    @deprecated
+    // @deprecated
     get val(): T {
         return this._val
     }

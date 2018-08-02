@@ -19,7 +19,7 @@ export default class ObservableList<T> {
         return this._obsValues.map(it => it.value)
     }
 
-    @deprecated
+    // @deprecated
     get val(): ObservableValue<T>[] {
         return this._obsValues
     }
