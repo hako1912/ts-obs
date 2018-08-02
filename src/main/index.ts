@@ -28,11 +28,11 @@ import ValueBinding from './beans/binding/ValueBinding'
 // export ObservableValue
 // // module.exports = {
 export {
-    // Class,
-    // Flatten,
-    // ArrayChangeListener,
-    // Predicate,
-    // ValueChangeListener,
+    Class,
+    Flatten,
+    ArrayChangeListener,
+    Predicate,
+    ValueChangeListener,
     part,
     curry,
     eq,
