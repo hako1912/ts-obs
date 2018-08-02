@@ -1,6 +1,5 @@
 import {ArrayChangeListener, ValueChangeListener} from "../types";
 import ObservableValue from "./ObservableValue";
-import deprecated from "../decorator/deprecated";
 
 // 保持するObservableValueはサブクラスのみ参照可にする
 export default class ObservableList<T> {

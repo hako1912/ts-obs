@@ -1,5 +1,4 @@
 import {ValueChangeListener} from "../types";
-import deprecated from "../decorator/deprecated";
 
 export default class ObservableValue<T> {
     protected listeners: ValueChangeListener<T>[] = []
