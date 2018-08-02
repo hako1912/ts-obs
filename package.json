@@ -8,8 +8,8 @@
   "license": "MIT",
   "private": false,
   "files": [
-    "index.d.ts",
-    "dist/"
+    "./index.d.ts",
+    "./dist/index.js"
   ],
   "dependencies": {
     "typescript": "^2.9.2"
