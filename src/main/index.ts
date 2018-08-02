@@ -24,37 +24,38 @@ import ObservableList from './beans/ObservableList'
 import ObservableValue from './beans/ObservableValue'
 import FilteredList from './beans/binding/FilteredList'
 import ValueBinding from './beans/binding/ValueBinding'
-
+export default 'abcde'
 // export ObservableValue
 // // module.exports = {
 // export ObservableValue from './beans/ObservableValue';
-const mojuru = {
-    // Class,
-    // Flatten,
-    // ArrayChangeListener,
-    // Predicate,
-    // ValueChangeListener,
-    part,
-    curry,
-    eq,
-    getProperties,
-    not,
-    mixin,
-    Predicates,
-    Dependencies,
-    Repository,
-    Entity,
-    SurrogateKey,
-    SurrogateKeyRepository,
-    SurrogateKeyEntity,
-    LeftJoinedList,
-    CustomMap,
-    IndexedList,
-    ValueObject,
-    ObservableList,
-    ObservableValue,
-    FilteredList,
-    ValueBinding,
-}
+// module.exports = ObservableList
+// const mojuru = {
+//     // Class,
+//     // Flatten,
+//     // ArrayChangeListener,
+//     // Predicate,
+//     // ValueChangeListener,
+//     part,
+//     curry,
+//     eq,
+//     getProperties,
+//     not,
+//     mixin,
+//     Predicates,
+//     Dependencies,
+//     Repository,
+//     Entity,
+//     SurrogateKey,
+//     SurrogateKeyRepository,
+//     SurrogateKeyEntity,
+//     LeftJoinedList,
+//     CustomMap,
+//     IndexedList,
+//     ValueObject,
+//     ObservableList,
+//     ObservableValue,
+//     FilteredList,
+//     ValueBinding,
+// }
 
-export default mojuru
+// export default mojuru
