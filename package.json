@@ -8,15 +8,15 @@
   "license": "MIT",
   "private": false,
   "files": [
-    "tsconfig.json",
-    "dist/main"
+    "index.d.ts",
+    "dist/"
   ],
   "dependencies": {
     "typescript": "^2.9.2"
   },
   "scripts": {
     "mocha": "mocha --watch --watch-extensions ts --recursive --require ts-node/register -r tsconfig-paths/register \"src/test/**/*.test.ts\"",
-    "build": "webpack && tsc"
+    "build": "webpack"
   },
   "devDependencies": {
     "@types/mocha": "^5.2.4",

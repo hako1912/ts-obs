@@ -117,4 +117,5 @@ export default class ObservableList<T> {
     private onElementChange(val: T, oldVal: T) {
         this.elementListeners.forEach(it => it(val, oldVal))
     }
+    
 }
