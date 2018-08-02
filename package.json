@@ -8,8 +8,8 @@
   "license": "MIT",
   "private": false,
   "files": [
-    "./lib/index.d.ts",
-    "./dist/index.js"
+    "lib",
+    "dist"
   ],
   "scripts": {
     "mocha": "mocha --watch --watch-extensions ts --recursive --require ts-node/register -r tsconfig-paths/register \"src/test/**/*.test.ts\"",
