@@ -1,6 +1,6 @@
 {
   "name": "@hako1912/ts-utils",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "main": "./dist/index.js",
   "types": "./lib/index.d.ts",
   "repository": "git@github.com:hako1912/ts-utils.git",
