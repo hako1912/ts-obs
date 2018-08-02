@@ -1,7 +1,7 @@
 {
   "name": "@hako1912/ts-utils",
   "version": "0.0.2",
-  "main": "./dist/bundle.js",
+  "main": "./dist/index.js",
   "types": "./lib/index.d.ts",
   "repository": "git@github.com:hako1912/ts-utils.git",
   "author": "koya",
