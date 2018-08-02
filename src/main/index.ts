@@ -27,12 +27,13 @@ import ValueBinding from './beans/binding/ValueBinding'
 
 // export ObservableValue
 // // module.exports = {
-export {
-    Class,
-    Flatten,
-    ArrayChangeListener,
-    Predicate,
-    ValueChangeListener,
+// export ObservableValue from './beans/ObservableValue';
+const mojuru = {
+    // Class,
+    // Flatten,
+    // ArrayChangeListener,
+    // Predicate,
+    // ValueChangeListener,
     part,
     curry,
     eq,
@@ -56,3 +57,4 @@ export {
     ValueBinding,
 }
 
+export default mojuru
