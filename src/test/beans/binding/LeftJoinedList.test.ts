@@ -94,6 +94,20 @@ describe("LeftJoinedList", () => {
         assert.equal(joinings.values[0].valA, 'a1')
         assert.equal(joinings.values[0].valB, 'b1')
     });
+
+    it("外部キーを設定", () => {
+        const lefts: IndexedList<Vo, A> = new IndexedList(it => new Vo(it.id))
+        const rights: IndexedList<Vo, C> = new IndexedList(it => new Vo(it.id))
+        const joinings = new LeftJoinedList(lefts, rights, it => new Vo(1))
+
+        rights.push(new C(10, 'c1', 1))
+        assert.equal(joinings.values.length, 0)
+
+        lefts.push(new A(1, 'a1'))
+        assert.equal(joinings.values.length, 1)
+        assert.equal(joinings.values[0].valA, 'a1')
+        assert.equal(joinings.values[0].valC, 'c1')
+    });
 });
 
 class Vo extends ValueObject {
@@ -117,4 +131,11 @@ class B {
     constructor(public id: number,
                 public valB: string) {
     }
+}
+
+// 外部キー用
+class C {
+    constructor(public id: number,
+                public valC: string,
+                public valC2: number){}
 }

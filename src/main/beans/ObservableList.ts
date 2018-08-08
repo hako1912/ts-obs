@@ -1,6 +1,5 @@
 import {ArrayChangeListener, ValueChangeListener} from "../types";
 import ObservableValue from "./ObservableValue";
-import deprecated from "../decorator/deprecated";
 
 // 保持するObservableValueはサブクラスのみ参照可にする
 export default class ObservableList<T> {
@@ -19,7 +18,7 @@ export default class ObservableList<T> {
         return this._obsValues.map(it => it.value)
     }
 
-    @deprecated
+    // @deprecated
     get val(): ObservableValue<T>[] {
         return this._obsValues
     }
@@ -117,4 +116,5 @@ export default class ObservableList<T> {
     private onElementChange(val: T, oldVal: T) {
         this.elementListeners.forEach(it => it(val, oldVal))
     }
+    
 }

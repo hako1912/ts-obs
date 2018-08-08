@@ -1,5 +1,4 @@
 import {ValueChangeListener} from "../types";
-import deprecated from "../decorator/deprecated";
 
 export default class ObservableValue<T> {
     protected listeners: ValueChangeListener<T>[] = []
@@ -20,7 +19,7 @@ export default class ObservableValue<T> {
         this.listeners.forEach(lis => lis(value, old))
     }
 
-    @deprecated
+    // @deprecated
     get val(): T {
         return this._val
     }

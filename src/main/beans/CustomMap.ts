@@ -1,6 +1,5 @@
-import {functions} from "..";
-import eq = functions.eq;
-import not = functions.not;
+import not from "../funciton/not";
+import eq from "../funciton/eq";
 
 export class CustomMap<K, V> {
     private entries: CustomMap.Entry<K, V>[] = []

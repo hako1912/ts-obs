@@ -27,36 +27,33 @@ describe("Repository", () => {
         assert.equal(rep.size(), 0)
     });
 
-    it("join", () => {
+    it("join： 連番キーのエンティティ", () => {
         const leftRep = new TestRepository()
         const rightRep = new TestRepository2()
 
-
-
-        // const join = new LeftJoinedList(leftRep.store, rightRep.store)
-
-        // assert.equal(join.values.length, 1)
-        // assert.equal(join.values[0].val1, 1)
-        // assert.equal(join.values[0].val2, undefined)
+        const join = new LeftJoinedList(leftRep.store, rightRep.store)
 
         leftRep.insert(new TestEntity('a', 1))
+        assert.equal(join.values.length, 1)
+        assert.equal(join.values[0].val1, 1)
+        assert.equal(join.values[0].val2, undefined)
+
         rightRep.insert(new TestEntity2('b', 2))
-        // assert.equal(join.values.length, 1)
-        // assert.equal(join.values[0].val1, 1)
-        // assert.equal(join.values[0].val2, 2)
+        assert.equal(join.values.length, 1)
+        assert.equal(join.values[0].val1, 1)
+        assert.equal(join.values[0].val2, 2)
 
-        // rightRep.insert(new TestEntity2('b', 20))
-        // assert.equal(join.values.length, 1)
-        // assert.equal(join.values[0].val1, 1)
-        // assert.equal(join.values[0].val2, 2)
+        rightRep.insert(new TestEntity2('b', 20))
+        assert.equal(join.values.length, 1)
+        assert.equal(join.values[0].val1, 1)
+        assert.equal(join.values[0].val2, 2)
 
-        // leftRep.insert(new TestEntity('csss', 10))
-        // assert.equal(join.values.length, 2)
-        // assert.equal(join.values[0].val1, 1)
-        // assert.equal(join.values[0].val2, 2)
-        // assert.equal(join.values[1].val1, 10)
-        // assert.equal(join.values[1].val2, 20)
-
+        leftRep.insert(new TestEntity('c', 10))
+        assert.equal(join.values.length, 2)
+        assert.equal(join.values[0].val1, 1)
+        assert.equal(join.values[0].val2, 2)
+        assert.equal(join.values[1].val1, 10)
+        assert.equal(join.values[1].val2, 20)
     });
 });
 

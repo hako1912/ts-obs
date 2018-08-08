@@ -1,7 +1,6 @@
 import ValueObject from "../../main/beans/ValueObject";
-import {functions} from "../../main/funciton/functions";
-import eq = functions.eq;
 import * as assert from "power-assert";
+import eq from "../../main/funciton/eq";
 
 
 describe("function", () => {
