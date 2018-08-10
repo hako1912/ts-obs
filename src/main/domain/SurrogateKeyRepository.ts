@@ -15,7 +15,9 @@ export default abstract class SurrogateKeyRepository<E extends SurrogateKeyEntit
     }
 
     preUpdate(newValue: E, key: SurrogateKey) {
-        newValue.assignKey(key)
+        if (!newValue.hasKey()) {
+            newValue.assignKey(key)
+        }
     }
 
 }
