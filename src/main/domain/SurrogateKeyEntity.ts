@@ -1,12 +1,11 @@
 import Entity from "./Entity";
-import SurrogateKey from "./SurrogateKey";
 
-export default class SurrogateKeyEntity extends Entity<SurrogateKey> {
+export default class SurrogateKeyEntity extends Entity<number> {
     // 登録時に発行される
-    protected $id?: SurrogateKey
+    protected $id?: number
 
-    get $key(): SurrogateKey {
-        if (!this.$id) {
+    get $key(): number {
+        if (this.$id == null) {
             throw new Error('unassigned $key')
         }
         return this.$id;
@@ -16,7 +15,7 @@ export default class SurrogateKeyEntity extends Entity<SurrogateKey> {
         return this.$id != null
     }
 
-    public assignKey(key: SurrogateKey) {
+    public assignKey(key: number) {
         if (this.hasKey()) {
             throw new Error('already unassigned')
         }

@@ -26,7 +26,7 @@ export default class IndexedList<K, T> extends ObservableList<T> {
         // validate duplicate $key
         const keyValues = values.map(it => {
             const key = this._keySupplier(it)
-            if (!key) {
+            if (key == null) {
                 throw new Error('キーが取得できない。')
             }
             return {

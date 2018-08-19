@@ -12,7 +12,6 @@ import Dependencies from './di/Dependencies'
 // domain
 import Repository from './domain/Repository'
 import Entity from './domain/Entity'
-import SurrogateKey from './domain/SurrogateKey'
 import SurrogateKeyRepository from './domain/SurrogateKeyRepository'
 import SurrogateKeyEntity from './domain/SurrogateKeyEntity'
 // beans
@@ -41,7 +40,6 @@ export {
     Dependencies,
     Repository,
     Entity,
-    SurrogateKey,
     SurrogateKeyRepository,
     SurrogateKeyEntity,
     LeftJoinedList,

@@ -115,11 +115,11 @@ export class ValueBinding<T, U = T> {
 }
 
 // domain
-export abstract class Repository<K extends EntityKey, E extends Entity<K>> {
+export abstract class Repository<K extends EntityKey | number, E extends Entity<K>> {
     protected _store: IndexedList<K, E>;
     readonly store: IndexedList<K, E>;
     preInsert(entity: E): void;
-    insert(val: E): void;
+    insert(val: E): K;
     preUpdate(newVal: E, key: K): void;
     update(newVal: E, key: K): void;
     deleteBy(key: K): number;
@@ -127,25 +127,20 @@ export abstract class Repository<K extends EntityKey, E extends Entity<K>> {
     findBy(key: K): E;
     has(key: K): boolean;
 }
-export abstract class Entity<K extends EntityKey> extends ValueObject {
+export abstract class Entity<K extends EntityKey | number> extends ValueObject {
     abstract readonly $key: K;
     eq(val: this): boolean;
 }
-export class SurrogateKey extends EntityKey {
-    private id;
-    constructor(id: number);
-    eq(val: this): boolean;
-}
-export abstract class SurrogateKeyRepository<E extends SurrogateKeyEntity> extends Repository<SurrogateKey, E> {
+export abstract class SurrogateKeyRepository<E extends SurrogateKeyEntity> extends Repository<number, E> {
     private incremental;
     preInsert(entity: E): void;
-    preUpdate(newValue: E, key: SurrogateKey): void;
+    preUpdate(newValue: E, key: number): void;
 }
-export class SurrogateKeyEntity extends Entity<SurrogateKey> {
-    protected $id?: SurrogateKey;
-    readonly $key: SurrogateKey;
+export class SurrogateKeyEntity extends Entity<number> {
+    protected $id?: number;
+    readonly $key: number;
     hasKey(): boolean;
-    assignKey(key: SurrogateKey): void;
+    assignKey(key: number): void;
 }
 export abstract class EntityKey extends ValueObject {
 }

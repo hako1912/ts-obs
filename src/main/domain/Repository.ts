@@ -3,7 +3,7 @@ import Entity from "./Entity";
 import IndexedList from "../beans/binding/IndexedList";
 import eq from "../funciton/eq";
 
-export default abstract class Repository<K extends EntityKey, E extends Entity<K>> {
+export default abstract class Repository<K extends EntityKey | number, E extends Entity<K>> {
 
     protected _store = new IndexedList<K, E>(it => it.$key)
 
@@ -15,7 +15,7 @@ export default abstract class Repository<K extends EntityKey, E extends Entity<K
         // noop
     }
 
-    insert(val: E): void {
+    insert(val: E): K {
         // サブクラスで登録前に処理を挟む場合ここで
         this.preInsert(val)
         console.log(`insert: val=${JSON.stringify(val)}`)
@@ -30,6 +30,7 @@ export default abstract class Repository<K extends EntityKey, E extends Entity<K
             throw Error('undefined $key')
         }
         this.store.push(val)
+        return val.$key
     }
 
     preUpdate(newVal: E, key: K) {
@@ -70,7 +71,7 @@ export default abstract class Repository<K extends EntityKey, E extends Entity<K
     }
 
     has(key: K): boolean {
-        const find = this.store.find(it => it.$key.eq(key))
+        const find = this.store.find(it => eq(it.$key, key))
         return find != null
     }
 }

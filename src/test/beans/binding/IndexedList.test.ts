@@ -2,7 +2,6 @@ import IndexedList from "../../../main/beans/binding/IndexedList";
 import * as assert from "power-assert";
 import ValueObject from "../../../main/beans/ValueObject";
 import SurrogateKeyEntity from "../../../main/domain/SurrogateKeyEntity";
-import SurrogateKey from "../../../main/domain/SurrogateKey";
 
 describe("IndexedList", () => {
     it("push キーがprimitive", () => {
@@ -38,14 +37,14 @@ describe("IndexedList", () => {
     });
 
     it("push 連番エンティティ", () => {
-        const list = new IndexedList<SurrogateKey, TestEntity>(it => it.$key)
+        const list = new IndexedList<number, TestEntity>(it => it.$key)
 
         const e1 = new TestEntity()
-        e1.assignKey(new SurrogateKey(1))
+        e1.assignKey(1)
         const e2 = new TestEntity()
-        e2.assignKey(new SurrogateKey(2))
+        e2.assignKey(2)
         const e3 = new TestEntity()
-        e3.assignKey(new SurrogateKey(3))
+        e3.assignKey(3)
 
         list.push(e1)
         list.push(e2)
@@ -66,13 +65,13 @@ class Vo extends ValueObject {
 
 class A {
     constructor(public id: number,
-                public valA: string) {
+        public valA: string) {
     }
 }
 
 class B {
     constructor(public id: number,
-                public valB: string) {
+        public valB: string) {
     }
 }
 
