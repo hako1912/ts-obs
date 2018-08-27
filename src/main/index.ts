@@ -12,8 +12,8 @@ import Dependencies from './di/Dependencies'
 // domain
 import Repository from './domain/Repository'
 import Entity from './domain/Entity'
-import SurrogateKeyRepository from './domain/SurrogateKeyRepository'
-import SurrogateKeyEntity from './domain/SurrogateKeyEntity'
+import Repository from './domain/Repository'
+import Entity from './domain/Entity'
 // beans
 import LeftJoinedList from './beans/binding/LeftJoinedList'
 import { CustomMap } from './beans/CustomMap'
@@ -40,8 +40,8 @@ export {
     Dependencies,
     Repository,
     Entity,
-    SurrogateKeyRepository,
-    SurrogateKeyEntity,
+    Repository,
+    Entity,
     LeftJoinedList,
     CustomMap,
     IndexedList,

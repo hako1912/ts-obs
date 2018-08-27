@@ -131,12 +131,12 @@ export abstract class Entity<K extends EntityKey | number> extends ValueObject {
     abstract readonly $key: K;
     eq(val: this): boolean;
 }
-export abstract class SurrogateKeyRepository<E extends SurrogateKeyEntity> extends Repository<number, E> {
+export abstract class Repository<E extends Entity> extends Repository<number, E> {
     private incremental;
     preInsert(entity: E): void;
     preUpdate(newValue: E, key: number): void;
 }
-export class SurrogateKeyEntity extends Entity<number> {
+export class Entity extends Entity<number> {
     protected $id?: number;
     readonly $key: number;
     hasKey(): boolean;

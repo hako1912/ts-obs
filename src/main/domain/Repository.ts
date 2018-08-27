@@ -1,77 +1,64 @@
-import EntityKey from "./EntityKey";
+import IndexedList from '../beans/binding/IndexedList';
 import Entity from "./Entity";
-import IndexedList from "../beans/binding/IndexedList";
-import eq from "../funciton/eq";
 
-export default abstract class Repository<K extends EntityKey | number, E extends Entity<K>> {
+export default abstract class Repository<E extends Entity> {
 
-    protected _store = new IndexedList<K, E>(it => it.$key)
+    private incrementalId = 0
+    protected store = new IndexedList<number, E>(it => it.$id)
 
-    get store(): IndexedList<K, E> {
-        return this._store
-    }
-
-    preInsert(entity: E) {
-        // noop
-    }
-
-    insert(val: E): K {
-        // サブクラスで登録前に処理を挟む場合ここで
-        this.preInsert(val)
-        console.log(`insert: val=${JSON.stringify(val)}`)
-
-
-        if (this.has(val.$key)) {
-            // すでに存在するキーに対して挿入しようとした場合
-            throw Error(`key of ${val.$key} is already exists`)
+    findBy(id: number): E {
+        const entity = this.store.find(it => it.$id === id)
+        if (entity == null) {
+            throw Error(`no value present. key=${id}`)
         }
-        // $key validation
-        if (val.$key == null) {
-            throw Error('undefined $key')
-        }
-        this.store.push(val)
-        return val.$key
+        return entity
     }
 
-    preUpdate(newVal: E, key: K) {
-        // noop
+    findAll() {
+        return this.store.values
     }
 
-    update(newVal: E, key: K) {
-        // サブクラスで登録前に処理を挟む場合ここで
-        this.preUpdate(newVal, key)
-        console.log(`update: key=${JSON.stringify(key)}, newVal=${JSON.stringify(newVal)}`)
-
-        if (!this.has(key)) {
-            // 旧値が存在しない場合
-            throw Error(`key of ${key} is no value present`)
+    insert(entity: E): number {
+        // 連番キーを割り当てる
+        if (entity.$id < 0) {
+            entity.$id = this.incrementalId++
         }
-        if (this.deleteBy(key) === 0) {
-            throw Error('cant delete before update')
+        // すでに存在するキーに対して挿入しようとした場合
+        if (this.has(entity.$id)) {
+            throw Error(`key=${entity.$id} is already exists.`)
         }
-        this.insert(newVal)
+        this.store.push(entity)
+        return entity.$id
     }
 
-    deleteBy(key: K): number {
-        console.log(`deleteBy: key=${JSON.stringify(key)}`)
-        return this.store.removeIf(it => eq(it.$key, key))
+    update(entity: E) {
+        if (entity.$id < 0) {
+            throw Error(`updateError: key is not assigned.`)
+        }
+        const updateTarget = this.store.val.find(it => it.value.$id === entity.$id)
+        if (updateTarget == null) {
+            throw Error(`updateError: key=${entity.$id} is not exists.`)
+        }
+        updateTarget.value = entity
+    }
+
+    deleteBy(id: number): void {
+        if (!this.has(id)) {
+            throw Error(`deleteError: key=${id} is not exists.`)
+        }
+        this.store.removeIf(it => it.$id === id)
+    }
+
+    truncate() {
+        this.store.clear()
+        this.incrementalId = 0
     }
 
     size(): number {
         return this.store.val.length
     }
 
-    findBy(key: K): E {
-        console.log(`findBy: key=${JSON.stringify(key)}`)
-        const val = this.store.find(it => eq(it.$key, key))
-        if (val == null) {
-            throw Error(`no value present. key=${JSON.stringify(key)}`)
-        }
-        return val
-    }
-
-    has(key: K): boolean {
-        const find = this.store.find(it => eq(it.$key, key))
-        return find != null
+    has(id: number): boolean {
+        return this.store.find(it => it.$id === id) != null
     }
 }

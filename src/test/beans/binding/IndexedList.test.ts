@@ -1,7 +1,7 @@
 import IndexedList from "../../../main/beans/binding/IndexedList";
 import * as assert from "power-assert";
 import ValueObject from "../../../main/beans/ValueObject";
-import SurrogateKeyEntity from "../../../main/domain/SurrogateKeyEntity";
+import Entity from "../../../main/domain/Entity";
 
 describe("IndexedList", () => {
     it("push キーがprimitive", () => {
@@ -37,14 +37,14 @@ describe("IndexedList", () => {
     });
 
     it("push 連番エンティティ", () => {
-        const list = new IndexedList<number, TestEntity>(it => it.$key)
+        const list = new IndexedList<number, TestEntity>(it => it.$id)
 
         const e1 = new TestEntity()
-        e1.assignKey(1)
+        e1.$id = 1
         const e2 = new TestEntity()
-        e2.assignKey(2)
+        e2.$id = 2
         const e3 = new TestEntity()
-        e3.assignKey(3)
+        e3.$id = 3
 
         list.push(e1)
         list.push(e2)
@@ -75,5 +75,5 @@ class B {
     }
 }
 
-class TestEntity extends SurrogateKeyEntity {
+class TestEntity extends Entity {
 }

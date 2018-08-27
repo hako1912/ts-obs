@@ -1,14 +1,6 @@
-import EntityKey from "./EntityKey";
-import ValueObject from "../beans/ValueObject";
-import eq from "../funciton/eq"
+export default class Entity {
+    // 0未満は未割当とする
+    $id: number = -1
 
-export default abstract class Entity<K extends EntityKey | number> extends ValueObject {
-    abstract get $key(): K
-
-    eq(val: this): boolean {
-        return eq(this.$key, val.$key);
-    }
+    constructor($id?: number) { }
 }
-
-
-

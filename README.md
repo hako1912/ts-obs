@@ -11,8 +11,8 @@ list.val[0].val = 2 // 'element changed.'
 
 # Repository
 ```typescript
-class Aaa extends SurrogateKeyEntity {}
-class AaaRepository extends SurrogateKeyRepository<Aaa>{}
+class Aaa extends Entity {}
+class AaaRepository extends Repository<Aaa>{}
 
 const repository = new AaaRepository()
 const ent = new Aaa()
