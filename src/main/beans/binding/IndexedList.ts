@@ -1,9 +1,9 @@
-import { CustomMap } from './../CustomMap';
+import CustomMap from './../CustomMap';
 import ObservableList from "../ObservableList";
 import ObservableValue from "../ObservableValue";
 
 
-// K: $key
+// K: key
 // V: value
 export default class IndexedList<K, T> extends ObservableList<T> {
 

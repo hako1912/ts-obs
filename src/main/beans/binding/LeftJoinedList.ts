@@ -1,8 +1,5 @@
 import IndexedList from "./IndexedList";
 import mixin from "../../funciton/mixin";
-import eq from "../../funciton/eq";
-
-
 
 // K: $key
 // P: primaryList(not null)
@@ -41,7 +38,7 @@ export default class LeftJoinedList<K, P, S> extends IndexedList<K, P & {[E in k
             appends.forEach(it => {
                 const key = primaries.keySupplier(it)
                 // サブ要素から、優先要素のキーを外部キーにもつ要素を探す
-                const secondary = secondaries.values.find(sec => eq(foreignKeySupplier(sec), key))
+                const secondary = secondaries.values.find(sec => foreignKeySupplier(sec) === key)
                 const current = this.keyValueMap.find(key)
                 if (current) {
                     // 優先要素追加時は自要素が存在しないはずだからいらない気がする

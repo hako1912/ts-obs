@@ -4,7 +4,9 @@ import Entity from "./Entity";
 export default abstract class Repository<E extends Entity> {
 
     private incrementalId = 0
-    protected store = new IndexedList<number, E>(it => it.$id)
+    
+    // ホントはprotectedにしたいけどLeftJoinedListを作るときにこまる
+    public store = new IndexedList<number, E>(it => it.$id)
 
     findBy(id: number): E {
         const entity = this.store.find(it => it.$id === id)

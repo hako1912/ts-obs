@@ -81,24 +81,10 @@ describe("LeftJoinedList", () => {
         assert.equal(joinings.values[1].valB, undefined)
     });
 
-    it("キーがValueObject", () => {
-        const lefts: IndexedList<Vo, A> = new IndexedList(it => new Vo(it.id))
-        const rights: IndexedList<Vo, B> = new IndexedList(it => new Vo(it.id))
-        const joinings = new LeftJoinedList(lefts, rights)
-
-        rights.push(new B(1, 'b1'))
-        assert.equal(joinings.values.length, 0)
-
-        lefts.push(new A(1, 'a1'))
-        assert.equal(joinings.values.length, 1)
-        assert.equal(joinings.values[0].valA, 'a1')
-        assert.equal(joinings.values[0].valB, 'b1')
-    });
-
     it("外部キーを設定", () => {
-        const lefts: IndexedList<Vo, A> = new IndexedList(it => new Vo(it.id))
-        const rights: IndexedList<Vo, C> = new IndexedList(it => new Vo(it.id))
-        const joinings = new LeftJoinedList(lefts, rights, it => new Vo(1))
+        const lefts: IndexedList<number, A> = new IndexedList(it => it.id)
+        const rights: IndexedList<number, C> = new IndexedList(it => it.id)
+        const joinings = new LeftJoinedList(lefts, rights, it => it.id)
 
         rights.push(new C(10, 'c1', 1))
         assert.equal(joinings.values.length, 0)
@@ -106,7 +92,7 @@ describe("LeftJoinedList", () => {
         lefts.push(new A(1, 'a1'))
         assert.equal(joinings.values.length, 1)
         assert.equal(joinings.values[0].valA, 'a1')
-        assert.equal(joinings.values[0].valC, 'c1')
+        assert.equal(joinings.values[0].valC, undefined)
     });
 });
 

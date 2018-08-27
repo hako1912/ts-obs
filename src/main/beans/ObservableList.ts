@@ -1,5 +1,7 @@
-import {ArrayChangeListener, ValueChangeListener} from "../types";
 import ObservableValue from "./ObservableValue";
+
+type ArrayChangeListener<T> = (appends: T[], removes: T[]) => void
+type ValueChangeListener<T> = (now: T, old: T) => void
 
 // 保持するObservableValueはサブクラスのみ参照可にする
 export default class ObservableList<T> {

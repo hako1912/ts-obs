@@ -20,22 +20,6 @@ describe("IndexedList", () => {
         assert.equal(isError, true)
     });
 
-    it("push キーがValueObject", () => {
-        const list = new IndexedList<Vo, A>(it => new Vo(it.id))
-
-        list.push(new A(1, 'a'))
-        list.push(new A(2, 'b'))
-        list.push(new A(3, 'c'))
-
-        let isError = false
-        try {
-            list.push(new A(3, 'C'))
-        } catch {
-            isError = true
-        }
-        assert.equal(isError, true)
-    });
-
     it("push 連番エンティティ", () => {
         const list = new IndexedList<number, TestEntity>(it => it.$id)
 
@@ -51,17 +35,6 @@ describe("IndexedList", () => {
         list.push(e3)
     });
 });
-
-class Vo extends ValueObject {
-    constructor(private id: number) {
-        super()
-    }
-
-    eq(val: this): boolean {
-        return this.id === val.id;
-    }
-
-}
 
 class A {
     constructor(public id: number,

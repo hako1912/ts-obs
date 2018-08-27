@@ -1,11 +1,8 @@
-import {Class} from "../types";
-
-
 export default class Dependencies {
 
-    static container: Map<Class<any>, any> = new Map()
+    static container: Map<new () => any, any> = new Map()
 
-    static inject<T>(clazz: Class<T>): T {
+    static inject<T>(clazz: new () => T): T {
         const instance = Dependencies.container.get(clazz)
         if (instance) {
             return instance
