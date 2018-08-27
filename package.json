@@ -13,7 +13,8 @@
   ],
   "scripts": {
     "mocha": "mocha --watch --watch-extensions ts --recursive --require ts-node/register -r tsconfig-paths/register \"src/test/**/*.test.ts\"",
-    "build": "parcel build src/main/index.ts --no-minify"
+    "build": "parcel build src/main/index.ts --no-minify",
+    "declare": "tsc --emitDeclarationOnly --declaration"
   },
   "devDependencies": {
     "@types/mocha": "^5.2.4",

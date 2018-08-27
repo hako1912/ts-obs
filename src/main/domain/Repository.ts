@@ -22,7 +22,7 @@ export default abstract class Repository<E extends Entity> {
 
     insert(entity: E): number {
         // 連番キーを割り当てる
-        if (entity.$id < 0) {
+        if (entity.$id == null || entity.$id < 0) {
             entity.$id = this.incrementalId++
         }
         // すでに存在するキーに対して挿入しようとした場合
@@ -34,7 +34,7 @@ export default abstract class Repository<E extends Entity> {
     }
 
     update(entity: E) {
-        if (entity.$id < 0) {
+        if (entity.$id == null || entity.$id < 0) {
             throw Error(`updateError: key is not assigned.`)
         }
         const updateTarget = this.store.val.find(it => it.value.$id === entity.$id)
