@@ -40,4 +40,20 @@ describe("FilteredList", () => {
         // assert.equal(filter.values[1], 100)
         // assert.equal(filter.values[1], 2)
     });
+
+    it("要素変更時に要素変更", () => {
+        const obs = new ObservableList<number>()
+        obs.push(1, 2, 3)
+
+        const filter = new FilteredList(obs, val => val < 3)
+        assert.equal(filter.values.length, 2)
+        assert.equal(filter.values[0], 1)
+        assert.equal(filter.values[1], 2)
+
+        obs.val[1].value = 0
+        assert.equal(filter.values.length, 2)
+        assert.equal(filter.values[0], 1)
+        assert.equal(filter.values[1], 0)
+        // assert.equal(filter.values[1], 2)
+    });
 });

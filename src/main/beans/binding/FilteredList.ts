@@ -24,6 +24,9 @@ export default class FilteredList<T> extends ObservableList<T>{
                 if (!this.pred(now)) {
                     // もともとフィルタリストに存在する要素を削除するのでoldと比較
                     this._obsValues = this._obsValues.filter(it => it.value !== old)
+                } else {
+                    // もともとフィルタリスとに存在し、削除する必要がないなら、更新
+                    currentObs.value = now
                 }
             }
         })
