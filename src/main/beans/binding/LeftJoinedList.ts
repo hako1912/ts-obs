@@ -6,10 +6,10 @@ import mixin from "../../funciton/mixin";
 // S: secondaryList(optional)
 
 // TODO: 要素変更の監視
-export default class LeftJoinedList<K, P, S> extends IndexedList<K, P & {[E in keyof S]: E | undefined}> {
+export default class LeftJoinedList<K, P, S> extends IndexedList<K, P & { [E in keyof S]: E | undefined }> {
     constructor(primaries: IndexedList<K, P>,
-                secondaries: IndexedList<K, S>,
-                foreignKeySupplier: (secondaryVal: S) => K = secondaries.keySupplier) {
+        secondaries: IndexedList<K, S>,
+        foreignKeySupplier: (secondaryVal: S) => K = secondaries.keySupplier) {
         // 2つのリストを結合した新しいリストを生成する
         const initialValues: ((P & S) | P)[] = []
         primaries.keyValueMap.forEach((v, k) => {
@@ -47,6 +47,19 @@ export default class LeftJoinedList<K, P, S> extends IndexedList<K, P & {[E in k
                 this.push(secondary == null ? it : mixin(it, secondary) as any)
             })
         })
+        primaries.addElementListener((now, old) => {
+            const key = primaries.keySupplier(now)
+            const self = this._obsValues.find(it => this.keySupplier(it.value) === key)
+            const secondary = secondaries.values.find(sec => foreignKeySupplier(sec) === key)
+            // もともと存在する要素なら更新する
+            if (self != null) {
+                if (secondary != null) {
+                    self.value = mixin(now, secondary) as any
+                } else {
+                    self.value = now as any
+                }
+            }
+        })
 
         // サブリストの変更監視
         secondaries.addArrayListener((appends, removes) => {
@@ -75,8 +88,15 @@ export default class LeftJoinedList<K, P, S> extends IndexedList<K, P & {[E in k
                     this.push(mixin(primary, it) as any)
                 }
             })
-
-
+        })
+        secondaries.addElementListener((now, old) => {
+            const key = foreignKeySupplier(now)
+            const self = this._obsValues.find(it => this.keySupplier(it.value) === key)
+            const primary = primaries.keyValueMap.find(key)
+            // もともと存在する要素なら更新する
+            if (self != null) {
+                self.value = mixin(primary, now) as any
+            }
         })
     }
 }

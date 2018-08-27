@@ -81,6 +81,54 @@ describe("LeftJoinedList", () => {
         assert.equal(joinings.values[1].valB, undefined)
     });
 
+    it("要素更新： 優先", () => {
+        const lefts: IndexedList<number, A> = new IndexedList(it => it.id)
+        const rights: IndexedList<number, B> = new IndexedList(it => it.id)
+        const joinings = new LeftJoinedList(lefts, rights)
+
+        lefts.push(new A(1, 'a1'))
+        lefts.push(new A(2, 'a2'))
+        rights.push(new B(1, 'b1'))
+        rights.push(new B(2, 'b2'))
+        assert.equal(joinings.values.length, 2)
+        assert.equal(joinings.values[0].valA, 'a1')
+        assert.equal(joinings.values[0].valB, 'b1')
+        assert.equal(joinings.values[1].valA, 'a2')
+        assert.equal(joinings.values[1].valB, 'b2')
+
+        // 更新
+        lefts.val[0].value = new A(1, 'a99')
+        assert.equal(joinings.values.length, 2)
+        assert.equal(joinings.values[0].valA, 'a99')
+        assert.equal(joinings.values[0].valB, 'b1')
+        assert.equal(joinings.values[1].valA, 'a2')
+        assert.equal(joinings.values[1].valB, 'b2')
+    });
+
+    it("要素更新： サブ", () => {
+        const lefts: IndexedList<number, A> = new IndexedList(it => it.id)
+        const rights: IndexedList<number, B> = new IndexedList(it => it.id)
+        const joinings = new LeftJoinedList(lefts, rights)
+
+        lefts.push(new A(1, 'a1'))
+        lefts.push(new A(2, 'a2'))
+        rights.push(new B(1, 'b1'))
+        rights.push(new B(2, 'b2'))
+        assert.equal(joinings.values.length, 2)
+        assert.equal(joinings.values[0].valA, 'a1')
+        assert.equal(joinings.values[0].valB, 'b1')
+        assert.equal(joinings.values[1].valA, 'a2')
+        assert.equal(joinings.values[1].valB, 'b2')
+
+        // 更新
+        rights.val[0].value = new B(1, 'b99')
+        assert.equal(joinings.values.length, 2)
+        assert.equal(joinings.values[0].valA, 'a1')
+        assert.equal(joinings.values[0].valB, 'b99')
+        assert.equal(joinings.values[1].valA, 'a2')
+        assert.equal(joinings.values[1].valB, 'b2')
+    });
+
     it("外部キーを設定", () => {
         const lefts: IndexedList<number, A> = new IndexedList(it => it.id)
         const rights: IndexedList<number, C> = new IndexedList(it => it.id)
