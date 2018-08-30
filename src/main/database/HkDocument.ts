@@ -2,7 +2,14 @@ import HkCollection from "./HkCollection";
 
 export default abstract class HkDocument {
 
-    constructor(readonly $parent?: HkCollection<any>, readonly $id: number = -1) { }
+    constructor(protected _$parent?: HkCollection<any>, protected _$id: number = -1) { }
+
+    get $parent(): HkCollection<any> | undefined {
+        return this._$parent
+    }
+    get $id(): number {
+        return this._$id
+    }
 
     readonly $collections = {
         // TODO: ここにコレクション
