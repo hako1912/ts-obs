@@ -1,7 +1,6 @@
 import Entity from "../../main/domain/Entity";
 import Repository from "../../main/domain/Repository";
 import assert = require("power-assert");
-import LeftJoinedList from "../../main/beans/binding/LeftJoinedList";
 
 beforeEach(() => {
 
@@ -14,10 +13,10 @@ describe("Repository", () => {
 
         // 登録
         const entInsert = new TestEntity('hoge', 1)
-        
-        const id = rep.insert(entInsert)
+
+        rep.insert(entInsert)
         assert.equal(rep.size(), 1)
-        assert.equal(id, 0)
+        assert.equal(entInsert.$id, 0)
         assert.equal(rep.findBy(0), entInsert)
 
         // 更新
@@ -34,11 +33,11 @@ describe("Repository", () => {
 
     it("update: インデックスが変わらず中身だけ変わること", () => {
         const rep = new TestRepository()
-        
+
         const ent1 = new TestEntity('hoge1', 1)
         const ent2 = new TestEntity('hoge2', 2)
         const ent3 = new TestEntity('hoge3', 3)
-        
+
         rep.insert(ent1)
         rep.insert(ent2)
         rep.insert(ent3)
@@ -54,34 +53,34 @@ describe("Repository", () => {
         assert.equal(rep.findAll()[2].name, 'hoge3')
     });
 
-    it("join： 連番キーのエンティティ", () => {
-        const leftRep = new TestRepository()
-        const rightRep = new TestRepository2()
+    // it("join： 連番キーのエンティティ", () => {
+    //     const leftRep = new TestRepository()
+    //     const rightRep = new TestRepository2()
 
-        const join = new LeftJoinedList(leftRep.store, rightRep.store)
+    //     const join = new LeftJoinedList(leftRep.store, rightRep.store)
 
-        leftRep.insert(new TestEntity('a', 1))
-        assert.equal(join.values.length, 1)
-        assert.equal(join.values[0].val1, 1)
-        assert.equal(join.values[0].val2, undefined)
+    //     leftRep.insert(new TestEntity('a', 1))
+    //     assert.equal(join.values.length, 1)
+    //     assert.equal(join.values[0].val1, 1)
+    //     assert.equal(join.values[0].val2, undefined)
 
-        rightRep.insert(new TestEntity2('b', 2))
-        assert.equal(join.values.length, 1)
-        assert.equal(join.values[0].val1, 1)
-        assert.equal(join.values[0].val2, 2)
+    //     rightRep.insert(new TestEntity2('b', 2))
+    //     assert.equal(join.values.length, 1)
+    //     assert.equal(join.values[0].val1, 1)
+    //     assert.equal(join.values[0].val2, 2)
 
-        rightRep.insert(new TestEntity2('b', 20))
-        assert.equal(join.values.length, 1)
-        assert.equal(join.values[0].val1, 1)
-        assert.equal(join.values[0].val2, 2)
+    //     rightRep.insert(new TestEntity2('b', 20))
+    //     assert.equal(join.values.length, 1)
+    //     assert.equal(join.values[0].val1, 1)
+    //     assert.equal(join.values[0].val2, 2)
 
-        leftRep.insert(new TestEntity('c', 10))
-        assert.equal(join.values.length, 2)
-        assert.equal(join.values[0].val1, 1)
-        assert.equal(join.values[0].val2, 2)
-        assert.equal(join.values[1].val1, 10)
-        assert.equal(join.values[1].val2, 20)
-    });
+    //     leftRep.insert(new TestEntity('c', 10))
+    //     assert.equal(join.values.length, 2)
+    //     assert.equal(join.values[0].val1, 1)
+    //     assert.equal(join.values[0].val2, 2)
+    //     assert.equal(join.values[1].val1, 10)
+    //     assert.equal(join.values[1].val2, 20)
+    // });
 });
 
 class TestRepository extends Repository<TestEntity> {

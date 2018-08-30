@@ -5,9 +5,9 @@ export default abstract class Repository<E extends Entity> {
     store: IndexedList<number, E>;
     findBy(id: number): E;
     findAll(): E[];
-    insert(entity: E): number;
-    update(entity: E): void;
-    deleteBy(id: number): void;
+    insert(...entities: E[]): void;
+    update(...entities: E[]): void;
+    deleteBy(...ids: number[]): void;
     truncate(): void;
     size(): number;
     has(id: number): boolean;

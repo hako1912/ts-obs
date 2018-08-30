@@ -1,6 +1,5 @@
 import FilteredList from './beans/binding/FilteredList';
 import IndexedList from './beans/binding/IndexedList';
-import LeftJoinedList from './beans/binding/LeftJoinedList';
 import ValueBinding from './beans/binding/ValueBinding';
 import ObservableList from './beans/ObservableList';
 import ObservableValue from './beans/ObservableValue';
@@ -8,4 +7,6 @@ import ValueObject from './beans/ValueObject';
 import Dependencies from './di/Dependencies';
 import Entity from './domain/Entity';
 import Repository from './domain/Repository';
-export { FilteredList, IndexedList, LeftJoinedList, ValueBinding, ObservableList, ObservableValue, ValueObject, Dependencies, Entity, Repository, };
+import HkCollection from './database/HkCollection';
+import HkDocument from './database/HkDocument';
+export { FilteredList, IndexedList, ValueBinding, ObservableList, ObservableValue, ValueObject, Dependencies, Entity, Repository, HkDocument, HkCollection, };

@@ -24,7 +24,13 @@ export default abstract class Repository<E extends Entity> {
         entities.forEach(entity => {
             // 連番キーを割り当てる
             if (entity.$id == null || entity.$id < 0) {
-                entity.$id = this.incrementalId++
+                let maxId = -1
+                this.store.values.forEach(it => {
+                    if(maxId < it.$id){
+                        maxId = it.$id
+                    }
+                })
+                entity.$id = maxId + 1
             }
             // すでに存在するキーに対して挿入しようとした場合
             if (this.has(entity.$id)) {

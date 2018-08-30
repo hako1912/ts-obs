@@ -1,6 +1,5 @@
 import FilteredList from './beans/binding/FilteredList'
 import IndexedList from './beans/binding/IndexedList'
-import LeftJoinedList from './beans/binding/LeftJoinedList'
 import ValueBinding from './beans/binding/ValueBinding'
 //
 // import CustomMap from './beans/CustomMap'
@@ -14,10 +13,12 @@ import Dependencies from './di/Dependencies'
 import Entity from './domain/Entity'
 import Repository from './domain/Repository'
 //
+import HkCollection from './database/HkCollection'
+import HkDocument from './database/HkDocument'
+//
 export {
     FilteredList,
     IndexedList,
-    LeftJoinedList,
     ValueBinding,
     ObservableList,
     ObservableValue,
@@ -25,4 +26,6 @@ export {
     Dependencies,
     Entity,
     Repository,
+    HkDocument,
+    HkCollection,
 }
