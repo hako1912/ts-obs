@@ -1,11 +1,14 @@
 import HkCollection from "./HkCollection";
 export default abstract class HkDocument {
-    readonly $parent?: HkCollection<any> | undefined;
+    private _$id;
+    private _$parent?;
+    protected _$collections: {};
     readonly $id: number;
-    constructor($parent?: HkCollection<any> | undefined, $id?: number);
-    readonly $collections: {};
-    abstract copy(options?: {
+    readonly $parent: HkCollection<any> | undefined;
+    abstract readonly $collections: {};
+    update(options?: {
         $id?: number;
         $parent?: HkCollection<any>;
-    }): any;
+        $collections?: {};
+    }): void;
 }

@@ -1,14 +1,14 @@
 import HkDocument from "./HkDocument";
 export default class HkCollection<D extends HkDocument> {
-    readonly $parent?: HkDocument | undefined;
-    $id: string;
-    private incrementalId;
+    protected _$parent: HkDocument;
+    constructor(_$parent: HkDocument);
+    readonly $id: string;
     private documents;
-    constructor($parent?: HkDocument | undefined);
-    static copy<T extends HkDocument>(col: HkCollection<T>): HkCollection<T>;
+    private incrementalId;
+    readonly $parent: HkDocument | undefined;
     findBy(id: number): D;
     findAll(): D[];
-    put(...documents: D[]): D[];
+    put(...documents: D[]): void;
     update(...documents: D[]): void;
     deleteBy(...ids: number[]): void;
     truncate(): void;

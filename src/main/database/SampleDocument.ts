@@ -1,35 +1,39 @@
 import HkDocument from "./HkDocument";
 import HkCollection from "./HkCollection";
 
-// TODO: ここ自動生成
+
+type SampleDocumentCollections = { docs: HkCollection<SampleDocument> }
+
+/**
+ * ドキュメントクラスのサンプル。
+ */
 export default class SampleDocument extends HkDocument {
 
-    constructor(
-        readonly name: string,
-        readonly value: number,
-        $parent?: HkCollection<any>,
-        $id: number = -1) {
-        super($parent, $id)
-
-        this.$collections = {
+    // メンバは外部クラスからは読み取り専用にする。
+    constructor(protected _name: string, protected _value: number) {
+        super()
+        // コレクションがある場合はここで設定する。
+        this._$collections = {
             docs: new HkCollection<SampleDocument>()
         }
-
     }
 
-    readonly $collections: {
-        docs: HkCollection<SampleDocument>
+    get name(): string { return this._name }
+    get value(): number { return this._value }
+
+    // コレクションのgetterを型注釈をつけてオーバーライドする。
+    // ※なくても動くけど補完が効かなくなる。
+    get $collections(): SampleDocumentCollections {
+        return <SampleDocumentCollections>this._$collections
     }
 
-    public copy(
-        options: { name?: string, value?: number, $id?: number, $parent?: HkCollection<any> } = {}
-    ): SampleDocument {
-        const doc = new SampleDocument(
-            options.name === void (0) ? this.name : options.name,
-            options.value === void (0) ? this.value : options.value,
-            options.$parent === void (0) ? this.$parent : options.$parent,
-            options.$id === void (0) ? this.$id : options.$id,
-        )
-        return doc
+    public update(options: {
+        $id?: number, $parent?: HkCollection<any>, $collections?: {}, name?: string, value?: number
+    } = {}) {
+        if (options.name != null) { this._name = options.name }
+        if (options.value != null) { this._value = options.value }
+        super.update(options)
     }
+
 }
+

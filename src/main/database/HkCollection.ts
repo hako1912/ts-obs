@@ -2,22 +2,19 @@ import HkDocument from "./HkDocument";
 import IndexedList from '../beans/binding/IndexedList'
 
 export default class HkCollection<D extends HkDocument> {
-    public $id: string = this.constructor.name
 
-    private incrementalId: number = 0
+    // コレクションは生成時に必ずドキュメントに紐づくようにする
+    // ルートはドキュメントなので、ドキュメントに紐づかないコレクションは存在しない
+    constructor(protected _$parent: HkDocument) { }
+
+    // IDはコレクション名で固定。変えてはいけない。
+    readonly $id: string = this.constructor.name
 
     private documents = new IndexedList<number, D>(doc => doc.$id)
+    // ドキュメント格納時にオートインクリメントされる
+    private incrementalId: number = 0
 
-    constructor(readonly $parent?: HkDocument) {
-    }
-
-    static copy<T extends HkDocument>(col: HkCollection<T>): HkCollection<T> {
-        const copyCol = new HkCollection<T>(col.$parent)
-        col.documents.forEach(doc => {
-            copyCol.put(doc.copy())
-        })
-        return copyCol
-    }
+    get $parent(): HkDocument | undefined { return this._$parent }
 
     findBy(id: number): D {
         const doc = this.documents.findBy(id)
@@ -31,32 +28,22 @@ export default class HkCollection<D extends HkDocument> {
         return this.documents.values
     }
 
-    put(...documents: D[]): D[] {
-        let added: D[] = []
+    put(...documents: D[]): void {
         documents.forEach(doc => {
             const id = doc.$id
             if (id == null || id < 0) {
-                added.push(doc.copy({
-                    $id: this.incrementalId++,
-                    $parent: this
-                }) as D)
+                doc.update({ $id: this.incrementalId++, $parent: this })
             } else {
                 if (this.has(id)) {
-                    throw Error(`key=${id} is already exists.`)
+                    throw Error(`id=${id} is already exists.`)
                 }
                 if (this.incrementalId <= id) {
                     this.incrementalId = id + 1
                 }
-                added.push(doc.copy(
-                    {
-                        $parent: this
-                    }
-                ) as D)
+                doc.update({ $parent: this })
             }
-
         })
-        this.documents.push(...added)
-        return added
+        this.documents.push(...documents)
     }
 
     update(...documents: D[]) {

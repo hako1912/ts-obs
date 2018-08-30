@@ -1,20 +1,30 @@
 import HkCollection from "./HkCollection";
 
+
+
 export default abstract class HkDocument {
 
-    constructor(protected _$parent?: HkCollection<any>, protected _$id: number = -1) { }
+    // コレクションがドキュメントを格納するときに自動的に設定される
+    // コレクションに格納されるまではこのデフォルト値となる
+    private _$id: number = -1
+    private _$parent?: HkCollection<any>
 
-    get $parent(): HkCollection<any> | undefined {
-        return this._$parent
-    }
-    get $id(): number {
-        return this._$id
-    }
+    // サブクラスでコレクションがある場合はコンストラクタで設定する。
+    protected _$collections: {} = {}
 
-    readonly $collections = {
-        // TODO: ここにコレクション
-    }
+    get $id(): number { return this._$id }
+    get $parent(): HkCollection<any> | undefined { return this._$parent }
 
-    public abstract copy(options?: { $id?: number, $parent?: HkCollection<any> }): any
+    // サブクラスでコレクションがある場合はオーバーライドする。
+    // 補完が効くようにするため型注釈をつけること。
+    abstract get $collections(): {}
+
+    // サブクラスでフィールドがある場合はオーバーライドする。
+    // super.update()を必ず呼ぶこと。
+    public update(options: { $id?: number, $parent?: HkCollection<any>, $collections?: {} } = {}) {
+        if (options.$id != null) { this._$id = options.$id }
+        if (options.$parent != null) { this._$parent = options.$parent }
+        if (options.$collections != null) { this._$collections = options.$collections }
+    }
 
 }
