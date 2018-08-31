@@ -11,7 +11,7 @@ export default class HkCollection<D extends HkDocument> {
     readonly $id: string = this.constructor.name
 
     private documents = new IndexedList<number, D>(doc => doc.$id)
-    // ドキュメント格納時にオートインクリメントされる
+    
     private incrementalId: number = 0
 
     get $parent(): HkDocument | undefined { return this._$parent }

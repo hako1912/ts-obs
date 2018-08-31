@@ -14,7 +14,7 @@ export default class SampleDocument extends HkDocument {
         super()
         // コレクションがある場合はここで設定する。
         this._$collections = {
-            docs: new HkCollection<SampleDocument>()
+            docs: new HkCollection<SampleDocument>(this)
         }
     }
 
