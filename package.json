@@ -1,6 +1,6 @@
 {
   "name": "@hako1912/ts-utils",
-  "version": "0.0.20",
+  "version": "0.0.39",
   "main": "./dist/index.js",
   "types": "./lib/index.d.ts",
   "repository": "git@github.com:hako1912/ts-utils.git",
@@ -13,7 +13,8 @@
   ],
   "scripts": {
     "mocha": "mocha --watch --watch-extensions ts --recursive --require ts-node/register -r tsconfig-paths/register \"src/test/**/*.test.ts\"",
-    "build": "parcel build src/main/index.ts --no-minify"
+    "build": "parcel build src/main/index.ts --no-minify",
+    "declare": "tsc --emitDeclarationOnly --declaration"
   },
   "devDependencies": {
     "@types/mocha": "^5.2.4",
@@ -24,6 +25,7 @@
     "parcel-bundler": "^1.9.7",
     "power-assert": "^1.6.0",
     "ts-node": "^7.0.0",
+    "tsconfig-paths": "^3.5.0",
     "typescript": "^2.9.2"
   }
 }

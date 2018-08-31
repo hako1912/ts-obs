@@ -1,8 +1,7 @@
-import not from "../funciton/not";
-import eq from "../funciton/eq";
+import CustomMapEntry from "./CustomMapEntry"
 
-export class CustomMap<K, V> {
-    private entries: CustomMap.Entry<K, V>[] = []
+export default class CustomMap<K, V> {
+    private entries: CustomMapEntry<K, V>[] = []
 
     get values(): V[] {
         return this.entries.map(it => it.value)
@@ -17,14 +16,14 @@ export class CustomMap<K, V> {
         if (current) {
             this.update(key, value)
         } else {
-            this.entries.push(new CustomMap.Entry(key, value))
+            this.entries.push(new CustomMapEntry(key, value))
         }
     }
 
     remove(key: K): boolean {
         const beforeSize = this.entries.length
         console.log(`key=${key}`)
-        this.entries = this.entries.filter(it => not(it.key, key))
+        this.entries = this.entries.filter(it => it.key !== key)
         return this.entries.length < beforeSize
     }
 
@@ -32,7 +31,7 @@ export class CustomMap<K, V> {
         if (!this.remove(key)) {
             throw new Error('entry remove failed')
         }
-        this.entries.push(new CustomMap.Entry(key, value))
+        this.entries.push(new CustomMapEntry(key, value))
     }
 
     clear(): void {
@@ -52,23 +51,8 @@ export class CustomMap<K, V> {
         return entry == null ? undefined : entry.value
     }
 
-    private findEntry(key: K): CustomMap.Entry<K, V> | undefined {
-        return this.entries.find(it => eq(it.key, key))
+    private findEntry(key: K): CustomMapEntry<K, V> | undefined {
+        return this.entries.find(it => it.key === key)
     }
 
-}
-
-export namespace CustomMap {
-    export class Entry<K, V> {
-        constructor(private _key: K, private _value: V) {
-        }
-
-        get key(): K {
-            return this._key;
-        }
-
-        get value(): V {
-            return this._value;
-        }
-    }
 }

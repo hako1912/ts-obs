@@ -1,4 +1,4 @@
-import {ValueChangeListener} from "../types";
+type ValueChangeListener<T> = (now: T, old: T) => void
 
 export default class ObservableValue<T> {
     protected listeners: ValueChangeListener<T>[] = []

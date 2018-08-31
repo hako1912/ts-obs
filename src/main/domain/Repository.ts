@@ -1,76 +1,77 @@
-import EntityKey from "./EntityKey";
+import IndexedList from '../beans/binding/IndexedList';
 import Entity from "./Entity";
-import IndexedList from "../beans/binding/IndexedList";
-import eq from "../funciton/eq";
 
-export default abstract class Repository<K extends EntityKey, E extends Entity<K>> {
+export default abstract class Repository<E extends Entity> {
 
-    protected _store = new IndexedList<K, E>(it => it.$key)
+    private incrementalId = 0
 
-    get store(): IndexedList<K, E> {
-        return this._store
+    // ホントはprotectedにしたいけどLeftJoinedListを作るときにこまる
+    public store = new IndexedList<number, E>(it => it.$id)
+
+    findBy(id: number): E {
+        const entity = this.store.find(it => it.$id === id)
+        if (entity == null) {
+            throw Error(`no value present. key=${id}`)
+        }
+        return entity
     }
 
-    preInsert(entity: E) {
-        // noop
+    findAll() {
+        return this.store.values
     }
 
-    insert(val: E): void {
-        // サブクラスで登録前に処理を挟む場合ここで
-        this.preInsert(val)
-        console.log(`insert: val=${JSON.stringify(val)}`)
-
-
-        if (this.has(val.$key)) {
+    insert(...entities: E[]): void {
+        entities.forEach(entity => {
+            // 連番キーを割り当てる
+            if (entity.$id == null || entity.$id < 0) {
+                let maxId = -1
+                this.store.values.forEach(it => {
+                    if(maxId < it.$id){
+                        maxId = it.$id
+                    }
+                })
+                entity.$id = maxId + 1
+            }
             // すでに存在するキーに対して挿入しようとした場合
-            throw Error(`key of ${val.$key} is already exists`)
-        }
-        // $key validation
-        if (val.$key == null) {
-            throw Error('undefined $key')
-        }
-        this.store.push(val)
+            if (this.has(entity.$id)) {
+                throw Error(`key=${entity.$id} is already exists.`)
+            }
+        })
+        this.store.push(...entities)
     }
 
-    preUpdate(newVal: E, key: K) {
-        // noop
+    update(...entities: E[]) {
+        entities.forEach(entity => {
+            if (entity.$id == null || entity.$id < 0) {
+                throw Error(`updateError: key is not assigned.`)
+            }
+            const updateTarget = this.store.val.find(it => it.value.$id === entity.$id)
+            if (updateTarget == null) {
+                throw Error(`updateError: key=${entity.$id} is not exists.`)
+            }
+            updateTarget.value = entity
+        })
     }
 
-    update(newVal: E, key: K) {
-        // サブクラスで登録前に処理を挟む場合ここで
-        this.preUpdate(newVal, key)
-        console.log(`update: key=${JSON.stringify(key)}, newVal=${JSON.stringify(newVal)}`)
-
-        if (!this.has(key)) {
-            // 旧値が存在しない場合
-            throw Error(`key of ${key} is no value present`)
-        }
-        if (this.deleteBy(key) === 0) {
-            throw Error('cant delete before update')
-        }
-        this.insert(newVal)
+    deleteBy(...ids: number[]): void {
+        ids.forEach(id => {
+            if (!this.has(id)) {
+                throw Error(`deleteError: key=${id} is not exists.`)
+            }
+            this.store.removeIf(it => it.$id === id)
+        })
     }
 
-    deleteBy(key: K): number {
-        console.log(`deleteBy: key=${JSON.stringify(key)}`)
-        return this.store.removeIf(it => eq(it.$key, key))
+    truncate() {
+        this.store.clear()
+        this.incrementalId = 0
     }
 
     size(): number {
         return this.store.val.length
     }
 
-    findBy(key: K): E {
-        console.log(`findBy: key=${JSON.stringify(key)}`)
-        const val = this.store.find(it => eq(it.$key, key))
-        if (val == null) {
-            throw Error(`no value present. key=${JSON.stringify(key)}`)
-        }
-        return val
-    }
-
-    has(key: K): boolean {
-        const find = this.store.find(it => it.$key.eq(key))
-        return find != null
+    has(id: number): boolean {
+        return this.store.find(it => it.$id === id) != null
     }
 }
